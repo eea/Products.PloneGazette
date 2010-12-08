@@ -3,7 +3,8 @@ Changelog
 
 2.5.11-dev - (unreleased)
 -------------------------
- - Feature: trigger sending newsletters asynchronously [tiberich]
+ - Feature: trigger sending newsletters asynchronously [tiberich #3948]
+ - Feature: send an email announcing start and end of newsletter delivery [tiberich #3948]
 
 2.5.10 - (2010-11-30)
 ---------------------

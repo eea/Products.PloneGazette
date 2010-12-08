@@ -32,9 +32,13 @@
         <span tal:replace="stats/htmlactive" i18n:name="count_html">100</span> will receive it in HTML when 
         <span tal:replace="stats/plaintextactive" i18n:name="count_plain">20</span> will receive it in plain text</span>.
     </p>
+    <p>2 email messages will be sent to <span tal:content="context/aq_parent/testEmail" />. One is sent before
+      the newsletter delivery starts, and another one when the newsletter delivery finishes.</p>
     <p tal:condition="python:here.getTheme().getExtraRecipients()"
       tal:define="stats python:here.getTheme().extraRecipientStats()">
-      <span tal:omit-tag="" i18n:translate="text_send_extra">In addition, this newsletter will be sent to <span i18n:name="total" tal:replace="stats/total">100</span> extra recipient(s).
+      <span tal:omit-tag="" i18n:translate="text_send_extra">In addition, this
+        newsletter will be sent to <span i18n:name="total"
+          tal:replace="stats/total">100</span> extra recipient(s).
         <span tal:replace="stats/html" i18n:name="count_html">100</span> will receive it in HTML when
         <span tal:replace="stats/plaintext" i18n:name="count_plain">20</span> will receive it in plain text</span>
     </p>

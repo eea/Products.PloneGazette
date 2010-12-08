@@ -494,19 +494,19 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
         if REQUEST is None:
             REQUEST = self.REQUEST
         theme = self.getTheme()
-        email = theme.testEmail
+        testemail = theme.testEmail
         editurl = theme.absolute_url() + '/xxx'
 
         # We want to test the unsubscribe url too and we asume the test subscriber is locade in the theme
         for subscriber in theme.objectValues('Subscriber'):
-            if subscriber.Title() == email:
+            if subscriber.Title() == testemail:
                 si = subscriber.mailingInfo()
                 # si is None if user is inactive
                 if si is not None:
                     editurl = si[2]
                 break;
 
-        recipients = [(email, 'HTML', editurl), (email, 'Text', editurl)]
+        recipients = [(testemail, 'HTML', editurl), (testemail, 'Text', editurl)]
         # force fresh rendering of the template - do not use dynamic content stored in instance.
         errors = self.sendToRecipients(recipients, force=True)
         return self.Newsletter_testForm(errors=errors, sent=1)
@@ -514,6 +514,58 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
     ########################
     ## Sending newsletter ##
     ########################
+
+    def sendBeginSendNotification(self):
+        theme = self.getTheme()
+        charset = theme.ploneCharset()
+
+        mailto   = theme.testEmail
+        mailfrom = theme.authorEmail
+        subject  = "Newsletter delivery started"
+        
+        body = """The following newsletter has started the message delivery process: 
+            %s
+            %s
+            """ % (self.Title(), self.absolute_url())
+
+        msg                 = email.Message.Message()
+        msg['To']           = mailto
+        msg['From']         = mailfrom
+        msg['Subject']      = subject
+        msg["Date"]         = email.Utils.formatdate(localtime = 1)
+        msg["Message-ID"]   = email.Utils.make_msgid()
+        msg["Mime-version"] = "1.0"
+
+        msg["Content-type"]="text/plain"
+        msg.set_payload(body, 'utf-8')
+
+        theme.sendmail(mailfrom, (mailto), msg, subject=subject)
+
+    def sendEndSendNotification(self):
+        theme = self.getTheme()
+        charset = theme.ploneCharset()
+
+        mailto   = theme.testEmail
+        mailfrom = theme.authorEmail
+        subject  = "Newsletter delivery completed"
+        
+        body = """The following newsletter has finished the message delivery process: 
+            %s
+            %s
+            """ % (self.Title(), self.absolute_url())
+
+        msg                 = email.Message.Message()
+        msg['To']           = mailto
+        msg['From']         = mailfrom
+        msg['Subject']      = subject
+        msg["Date"]         = email.Utils.formatdate(localtime = 1)
+        msg["Message-ID"]   = email.Utils.make_msgid()
+        msg["Mime-version"] = "1.0"
+
+        msg["Content-type"]="text/plain"
+        msg.set_payload(body, 'utf-8')
+
+        theme.sendmail(mailfrom, (mailto), msg, subject=subject)
 
     security.declareProtected(ChangeNewsletter, 'sendToRecipients')
     def sendToRecipients(self, recipients, force=False):
@@ -543,6 +595,9 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
             titleForMessage = str(Header(safe_unicode(self.getRelatedObject().Title(), charset)))
 
         portal_url = getToolByName(self, 'portal_url')()
+
+        self.sendBeginSendNotification()
+
         for mailTo, format, editurl in recipients:
             if theme.alternative_portal_url:
                 editurl = editurl.replace(portal_url,
@@ -597,6 +652,9 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
                 traceback.print_exc(file=tbfile)
                 logger.warning('Error when sending to %s\n%s' % (mailTo, tbfile.getvalue()))
                 tbfile.close()
+
+        self.sendEndSendNotification()
+
         return errors
 
     security.declareProtected(ChangeNewsletter, 'sendToSubscribers')
@@ -697,3 +755,4 @@ def make_verp(to, newsletter_id, prefix):
 
     to = to.replace("@", "=")
     return u"%s-%s-%s" % (prefix, newsletter_id, to)
+
