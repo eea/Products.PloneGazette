@@ -1,6 +1,9 @@
 Changelog
 =========
 
+2.5.12-dev - (unreleased)
+-------------------------
+
 2.5.11 - (2010-12-08)
 ---------------------
  - Feature: trigger sending newsletters asynchronously [tiberich #3948]
