@@ -443,11 +443,11 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
                 except Exception, e:
                     raise
                     # The email could not be sent, probably the specified address doesn't exist
-                    errors['email'] = translate('Email could not be sent. Error message is: ${error}', mapping={'error':str(e)}, context=self)
-                    data['email'] = emailaddress
-                    data['format'] = self.default_format
-                    transaction.abort()
-                    return data, errors
+                    #errors['email'] = translate('Email could not be sent. Error message is: ${error}', mapping={'error':str(e)}, context=self)
+                    #data['email'] = emailaddress
+                    #data['format'] = self.default_format
+                    #transaction.abort()
+                    #return data, errors
 
                 if self.notify:
                     # Notify the NewsletterTheme owner
@@ -482,8 +482,6 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
                     mailMsg.set_payload(safe_unicode(bodyText).encode(charset), charset)
                     #mailMsg.preamble="Mime message\n"
                     mailMsg.epilogue="\n" # To ensure that message ends with newline
-
-
 
                     self.sendmail(self.authorEmail, (self.testEmail,), mailMsg, subject = mailMsg['subject'])
                 data['success'] = 1
