@@ -24,7 +24,9 @@ NewsletterSend = function(context){
                     "newsletter has been sent before trying again.");
             }
         });
-        setTimeout(function(){ self.check_sent_status.call(self)}, 2000);
+        setTimeout(function(){ 
+            self.check_sent_status.call(self);
+        }, 2000);
         return false;
     });
 };
@@ -36,14 +38,18 @@ NewsletterSend.prototype.check_sent_status = function(){
         cache:false,
         success: function(text) {
             if (text != "OK") {
-                setTimeout(function(){self.check_sent_status.call(self)}, 2000);
+                setTimeout(function(){
+                    self.check_sent_status.call(self);
+                }, 2000);
                 return false;
             } else {
                 $(self.submit_btn).val("Done.");
             }
         },
         error:function(xhr) {
-            setTimeout( function(){self.check_sent_status.call(self)}, 2000);
+            setTimeout( function(){
+                self.check_sent_status.call(self);
+            }, 2000);
             this.submit_btn.val("Still trying.");
             return false;
         }
