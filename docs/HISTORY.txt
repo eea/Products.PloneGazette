@@ -1,6 +1,9 @@
 Changelog
 =========
 
+2.5.13-dev - (unreleased)
+-------------------------
+
 2.5.12 - (2010-12-10)
 ---------------------
  * Bug fix: add three missing semicolons in newsletter_send.js [tiberich #3948]
