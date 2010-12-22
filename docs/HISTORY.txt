@@ -3,6 +3,7 @@ Changelog
 
 2.5.13-dev - (unreleased)
 -------------------------
+ * Bug fix: fixed logging when removing subscriber [tiberich #4015]
 
 2.5.12 - (2010-12-10)
 ---------------------

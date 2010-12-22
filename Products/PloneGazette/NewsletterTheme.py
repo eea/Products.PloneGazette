@@ -575,7 +575,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
             self.sendmail(self.authorEmail, subscriber_email, 
                                 mailMsg, subject = mailMsg['subject'])
         except:
-            log.log("Could not send a PloneGazzette unsubscribe message to %s, removing subscriber anyway." % subscriber_email)
+            log("Could not send a PloneGazzette unsubscribe message to %s, removing subscriber anyway." % subscriber_email)
 
         parent = aq_parent(subscriber)
         parent.manage_delObjects([subscriber.id])
