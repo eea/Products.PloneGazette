@@ -1,7 +1,11 @@
 NewsletterSend = function(context){
     var self = this;
 
-    self.url = document.baseURI + "./getSendStatus";
+    var base = $("base").attr('href');
+    if !(base) base = document.baseURI;
+    if !(base) base = window.location.href.split("?")[0];
+
+    self.url = base + "./getSendStatus";
     self.context = context.get(0);
     self.submit_btn = $("input[type='submit']", context).get(0);
 
