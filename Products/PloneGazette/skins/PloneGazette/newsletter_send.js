@@ -1,9 +1,6 @@
 NewsletterSend = function(context){
     var self = this;
-
-    var base = $("base").attr('href');
-    if !(base) base = document.baseURI;
-    if !(base) base = window.location.href.split("?")[0];
+    var base = $("base").attr('href') || document.baseURI || window.location.href.split("?")[0];
 
     self.url = base + "/getSendStatus";
     self.context = context.get(0);
