@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.5.14-dev - (unreleased)
--------------------------
+2.5.14 - (2011-01-05)
+---------------------
  * Bug fix: fixed base URI retrieving for Internet Explorer [tiberich #4001]
 
 2.5.13 - (2010-12-22)
