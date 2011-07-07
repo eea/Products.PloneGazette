@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<import-steps>
+	<import-step id="various" version="20071201-01"
+		handler="Products.PloneGazette.setuphandlers.importVarious"
+		title="PloneGazette various">
+		Import various steps of PloneGazette
+	</import-step>
+	<import-step id="googlw" version="20081015-01"
+		handler="Products.PloneGazette.setuphandlers.importGoogle"
+		title="PloneGazette google analytics">
+		Import Google Analytics properties of PloneGazette
+	</import-step>
+	<import-step id="catalogmigrate" version="2010-02-08"
+		handler="Products.PloneGazette.setuphandlers.migrateInternalV3"
+		title="PloneGazette migrate to content types internal version 3">
+		Migrate the content types to internal version v3.
+	</import-step>
+</import-steps>
