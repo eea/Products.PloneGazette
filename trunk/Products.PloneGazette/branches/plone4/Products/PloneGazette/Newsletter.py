@@ -1,4 +1,4 @@
-#
+# 
 # $Id$
 #
 
@@ -31,6 +31,7 @@ import logging
 import re
 import traceback
 import transaction
+from zope.component import adapts
 
 #try:
     #from StructuredText.StructuredText import HTML as format_stx
@@ -73,7 +74,6 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
     ########################################
     ## Registration info for portal_types ##
     ########################################
-
     factory_type_information = {
         'id': 'Newsletter',
         'portal_type': 'Newsletter',
@@ -649,27 +649,27 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
     @postonly
     def sendToSubscribers(self, REQUEST=None):
         """Sends that newsletter to all subscribers and extra recipients"""
-
+        import pdb; pdb.set_trace()
         self.sent_status = True
         transaction.commit()
         
         theme = self.getTheme()
-        recipients = theme.mailingInfos()
+        set_recipients_mailingInfos = set(theme.mailingInfos())
         # we are sending to all recipients. Render dynamic content and store it persistently
         self._dynamic_content=self.render_dynamic_content(html=True)
-        errors1 = self.sendToRecipients(recipients)
-        recipients = theme.getExtraRecipients()
-        errors2 = self.sendToRecipients(recipients)
+#        errors1 = self.sendToRecipients(recipients)
+        set_recipients_extraRecipients = theme.getExtraRecipients()
+        errors = self.sendToRecipients(list(set_recipients_mailingInfos.union(set_recipients_extraRecipients)))
         self.dateEmitted = DateTime()
         if REQUEST is not None:
-            if errors1 or errors2:
-                statusMsg = translate(u'SMTP server related errors', domain='plonegazette', context=self) ##!: display recipient
+            if errors:
+                statusMsg = translate(u'SMTP server related errors', domain='plonegazette') ##!: display recipient
             else:
-                statusMsg = translate(u'The newsletter has been sent.', domain='plonegazette', context=self)
+                statusMsg = translate(u'The newsletter has been sent.', domain='plonegazette')
             self.plone_utils.addPortalMessage(statusMsg)
-            return self.Newsletter_sendForm(errors1=errors1, errors2=errors2)
+            return self.Newsletter_sendForm(errors=errors)
         else:
-            return (errors1, errors2)
+            return errors
 
     security.declarePublic("getSendStatus")
     def getSendStatus(self):

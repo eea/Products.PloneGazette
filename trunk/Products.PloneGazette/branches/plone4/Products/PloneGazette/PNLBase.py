@@ -79,15 +79,15 @@ class PNLContentBase:
         return l
     
     # For plone 2.1+ to show unindexed content
-    security.declareProtected(ChangeNewsletterTheme, 'getFolderContents')
-    def getFolderContents(self, contentFilter=None,batch=False,b_size=100,full_objects=False):
-        """Override getFolderContents to show all objects"""
-        contents = self.listFolderContents(contentFilter=contentFilter)
-        if batch:
-            from Products.CMFPlone import Batch
-            b_start = self.REQUEST.get('b_start', 0)
-            batch = Batch(contents, b_size, int(b_start), orphan=0)
-            return batch
-        return contents
+#    security.declareProtected(ChangeNewsletterTheme, 'getFolderContents')
+#    def getFolderContents(self, contentFilter=None,batch=False,b_size=100,full_objects=False):
+#        """Override getFolderContents to show all objects"""
+#        contents = self.listFolderContents(contentFilter=contentFilter)
+#        if batch:
+#            from Products.CMFPlone import Batch
+#            b_start = self.REQUEST.get('b_start', 0)
+#            batch = Batch(contents, b_size, int(b_start), orphan=0)
+#            return batch
+#        return contents
 
 InitializeClass(PNLContentBase)

@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind state=state
 ##bind subpath=traverse_subpath
-##parameters=id='', title=None, description=None, text=None, dateEmitted=None, utm_campaign='', utm_term='', utm_content='', text_format
+##parameters=id='', title=None, description=None, text=None, dateEmitted=None, utm_campaign='', utm_term='', utm_content='', text_format=''
 ##title=Edit content and metadata
 ##
 # 

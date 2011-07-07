@@ -52,18 +52,9 @@
       new NewsletterSend($("#sendform"));
     </script>
 
-    <div tal:define="errors options/errors1|nothing" tal:condition="errors">
+    <div tal:define="errors options/errors|nothing" tal:condition="errors">
       <p i18n:translate="smtp_errors_subscribers">The SMTP reported errors
         when sending the newsletter to these subscribers</p>
-      <ul>
-        <li tal:repeat="item errors"
-          tal:content="item">machin@truc.com</li>
-      </ul>
-    </div>
-    <div tal:define="errors options/errors2|nothing"
-      tal:condition="errors">
-      <p i18n:translate="smtp_errors_extrarecipients">The SMTP reported
-        errors when sending the newsletter to these extra recipients</p>
       <ul>
         <li tal:repeat="item errors"
           tal:content="item">machin@truc.com</li>

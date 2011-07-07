@@ -72,15 +72,8 @@ class AddBouncedSubscribers(formbase.FormBase, PGBaseViewMixin):
         # newsletter_id|email_address
         # If the newsletter id is missing, then it should be:
         # |email_address
-
-        bounces = []
-        rows = filter(None, data['bounced_addresses'].split('\n'))
-        for row in rows:
-            newsletter, email = row.split('|')
-            bounces.append((newsletter, email))
-
-        if self.context.automatic_cleanup and data['enable_automatic_cleanup']:
-            self.remove_subscribers()
+        
+        self.context.add_bounced_subscribers(data['bounced_addresses'])
 
         return "OK"
 

@@ -683,6 +683,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
                 sb = [newsletter_id]
 
             subscriber.bounces = sb
+            subscriber._p_changed = True
             catalog.reindexObject(subscriber)
 
         if self.automatic_cleanup:
@@ -692,6 +693,11 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
     def remove_subscribers(self):
         bouncers = self.get_bouncing_subscribers()
         count = len(bouncers)
+        catalog = self.get_subscribers_catalog()
+        results = catalog.searchResults()
+        totalcount = len(results)
+        if count >= totalcount:
+            return 0
 
         addresses = []
         for s in bouncers:

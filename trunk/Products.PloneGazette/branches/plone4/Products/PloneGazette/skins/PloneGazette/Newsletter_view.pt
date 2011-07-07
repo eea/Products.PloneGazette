@@ -13,7 +13,7 @@ $Id$
      i18n:domain="plone" 
      tal:define="objects here/getObjects;
                  len_text python:len(context.text);
-                 dateEmitted python:context.dateEmitted and toLocalizedTime(context.dateEmitted);
+                 dateEmitted python:context.dateEmitted and context.toLocalizedTime(context.dateEmitted);
                  view python:1">
 
 <div tal:condition="python:objects and context.renderedDynamicContent() and checkPermission('PNL Change Newsletter', context)" class="portalMessage" i18n:translate="text_newsletter_rendered">
