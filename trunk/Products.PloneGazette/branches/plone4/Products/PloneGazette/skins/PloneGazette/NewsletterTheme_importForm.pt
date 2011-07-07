@@ -36,13 +36,12 @@
         Upload here a csv file to create subscribers.
       </div>
 
-      <input type="file" name="file_upload" tal:attributes="tabindex tabindex/next" />
+      <input type="file" name="file_upload" />
 
     </div>
 
     <div class="formControls">
-      <input type="submit" value="Import" i18n:attributes="value label_import;"
-             tal:attributes="tabindex tabindex/next" />
+      <input type="submit" value="Import" i18n:attributes="value label_import;"/>
     </div>
     </fieldset>
   </form>

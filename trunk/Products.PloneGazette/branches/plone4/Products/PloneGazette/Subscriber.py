@@ -88,8 +88,6 @@ class Subscriber(PortalContent, DefaultDublinCoreImpl, PNLContentBase):
     ## Basic class behaviour ##
     ###########################
 
-    __implements__ = PortalContent.__implements__
-
     meta_type = factory_type_information['meta_type']
 
     manage_options = PortalContent.manage_options

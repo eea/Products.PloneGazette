@@ -1,24 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <tal:comment tal:replace="nothing">
-$Id$ 
+$Id$
 </tal:comment>
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal">
 
-<body tal:define="Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                  tabindex python:Iterator()">
+<body>
 
   <div metal:define-macro="portlet"
        i18n:domain="plonegazette"
        tal:define="nl_brains python: here.portal_catalog(portal_type='NewsletterTheme', allowedRolesAndUsers='Anonymous');
                    nl_objects python: [brain.getObject() for brain in nl_brains];
                    nl_objects python: [o for o in nl_objects if o];
-                   nl_unique python: len(nl_objects) == 1"
+                   nl_unique python: len(nl_objects) == 1;
+                   member context/@@plone_portal_state/member;
+                   "
        tal:condition="nl_objects">
     <dl class="portlet" id="portlet-gazette">
       <dt class="portletHeader"  >
-        <span class="portletTopLeft"></span>           
-          <span tal:content="python:test(nl_unique, 
+        <span class="portletTopLeft"></span>
+          <span tal:content="python:test(nl_unique,
                'Our newsletter', 'Our newsletters')"
           i18n:translate="">Our newsletter(s)</span>
         <span class="portletTopRight"></span>
@@ -28,6 +29,7 @@ $Id$
 
           <form action="register_newsletter"
                 method="post"
+                tal:define="portal_url nocall:context/portal_url"
                 tal:attributes="action string:$portal_url/register_newsletter">
 
             <tal:block tal:condition="nl_unique">

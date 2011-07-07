@@ -12,18 +12,18 @@ from DocumentTemplate.DT_Util import html_quote
 from Globals import InitializeClass
 from OFS import Folder
 from PNLBase import PNLContentBase
-from PNLPermissions import *
+from PNLPermissions import ChangeNewsletter
 from Products.CMFCore.permissions import View, ModifyPortalContent
 from Products.CMFCore.utils import getToolByName
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Products.CMFDefault.SkinnedFolder import SkinnedFolder
 from Products.CMFPlone.PloneFolder import OrderedContainer
-from Products.CMFPlone.interfaces.OrderedContainer import IOrderedContainer
 from Products.CMFPlone.utils import safe_unicode
 from elementtree import ElementTree, HTMLTreeBuilder
 from email.Header import Header
 from urlparse import urlparse
 from zope.i18n import translate
+from zope.structuredtext.html import HTML as format_stx
 import StringIO
 import cStringIO
 import email.Message
@@ -32,25 +32,18 @@ import re
 import traceback
 import transaction
 
-try:
-    from StructuredText.StructuredText import HTML as format_stx
-except:
-    from Products.CMFCore.utils import format_stx
+#try:
+    #from StructuredText.StructuredText import HTML as format_stx
+#except:
+    #from Products.CMFCore.utils import format_stx
 
-try:
-    from OFS.IOrderSupport import IOrderedContainer as IZopeOrderedContainer
-    hasZopeOrderedSupport=1
-except ImportError:
-    hasZopeOrderedSupport=0
-
-
-
+#try:
+    #from OFS.IOrderSupport import IOrderedContainer as IZopeOrderedContainer
+    #hasZopeOrderedSupport=1
+#except ImportError:
+    #hasZopeOrderedSupport=0
 
 # Additional imports for converting relative to absolute links
-
-
-
-
 
 logger = logging.getLogger('PloneGazette')
 
@@ -76,11 +69,6 @@ lynx_file_url = re.compile(r'file://localhost[^%]+%\(url\)s')
 
 class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLContentBase):
     """Newsletter class"""
-
-    if hasZopeOrderedSupport:
-        __implements__ = (IOrderedContainer, IZopeOrderedContainer)
-    else:
-        __implements__ = (IOrderedContainer,)
 
     ########################################
     ## Registration info for portal_types ##

@@ -1,13 +1,15 @@
-from zope.interface import implements
-
+from AccessControl import ClassSecurityInfo
+from PNLBase import PNLContentBase
+from PNLPermissions import ChangeNewsletterTheme
 from Products.Archetypes.atapi import BaseBTreeFolder, BaseBTreeFolderSchema
 from Products.Archetypes.atapi import registerType
-from AccessControl import ClassSecurityInfo
-from PNLPermissions import *
-from PNLBase import PNLContentBase
 from Products.CMFCore.permissions import ListFolderContents
-from Products.CMFCore.utils import getToolByName
 from Products.PloneGazette.interfaces import INewsletterBTree
+from Products.PloneGazette.config import PROJECTNAME
+from zope.interface import implements
+
+#from Products.CMFCore.utils import getToolByName
+
 
 class NewsletterBTree(BaseBTreeFolder, PNLContentBase):
     implements(INewsletterBTree)
@@ -33,7 +35,7 @@ class NewsletterBTree(BaseBTreeFolder, PNLContentBase):
     def listFolderContents(self, spec=None, contentFilter=None, suppressHiddenFiles=0):
         """
         """
-        return BaseFolder.listFolderContents(self, contentFilter=contentFilter, suppressHiddenFiles=suppressHiddenFiles)
+        return BaseBTreeFolder.listFolderContents(self, contentFilter=contentFilter, suppressHiddenFiles=suppressHiddenFiles)
         
     security.declareProtected(ChangeNewsletterTheme, 'folderlistingFolderContents')
     def folderlistingFolderContents(self, spec=None, contentFilter=None, suppressHiddenFiles=0):
@@ -51,5 +53,5 @@ class NewsletterBTree(BaseBTreeFolder, PNLContentBase):
         return RESPONSE.redirect(self.absolute_url()+'/view')
         
 
-registerType(NewsletterBTree)
+registerType(NewsletterBTree, PROJECTNAME)
 

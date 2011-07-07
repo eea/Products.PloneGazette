@@ -38,12 +38,6 @@ def addSection(self, id, title = '', REQUEST = {}):
 class Section(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLContentBase):
     """Section class"""
    
-    if hasZopeOrderedSupport:
-        __implements__ = (IOrderedContainer, IZopeOrderedContainer)
-    else:
-        __implements__ = (IOrderedContainer,)
- 
-
     ########################################
     ## Registration info for portal_types ##
     ########################################

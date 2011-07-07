@@ -6,27 +6,24 @@
 
 __version__ = "$Revision: 110864 $" [11:-2]
 
-## Archetypes import
-from Products.Archetypes.public import *
-from Products.Archetypes import listTypes
-
-## CMF imports
-
-from Products.CMFCore.utils import ContentInit
-from Products.CMFCore import permissions, DirectoryView
-from Products.CMFCore.utils import registerIcon
-
-
 from zope.i18nmessageid import MessageFactory
 PloneGazetteFactory = MessageFactory('plonegazette')
 
-## App imports
-import NewsletterTheme, Newsletter, Subscriber, Section, NewsletterTopic
-from config import PROJECTNAME
-from config import product_globals
+from Products.Archetypes import listTypes
+from Products.Archetypes.public import process_types
+from Products.CMFCore import permissions
+from Products.CMFCore.utils import ContentInit
+from Products.CMFCore.utils import registerIcon
+from Products.PloneGazette.PNLPermissions import AddNewsletterTheme, ChangeNewsletter
+from Products.PloneGazette.config import PROJECTNAME
 
-DirectoryView.registerDirectory('skins', product_globals)
-DirectoryView.registerDirectory('skins/PloneGazette', product_globals)
+import NewsletterTheme, Newsletter, Subscriber, Section, NewsletterTopic
+
+import patches  #applies patches
+
+#from Products.PloneGazette.config import product_globals
+#DirectoryView.registerDirectory('skins', product_globals)
+#DirectoryView.registerDirectory('skins/PloneGazette', product_globals)
 
 ## Types to register
 
@@ -35,9 +32,6 @@ contentClasses = (Newsletter.Newsletter, Subscriber.Subscriber, NewsletterTopic.
 factoryTypes = (Newsletter.Newsletter.factory_type_information,
                 Subscriber.Subscriber.factory_type_information,
                 NewsletterTopic.NewsletterTopic.factory_type_information)
-
-## Patches to apply
-import patches
 
 
 def initialize(context):
@@ -49,14 +43,14 @@ def initialize(context):
     ContentInit(
         'Plone Gazette Newsletter Theme',
         content_types = (NewsletterTheme.NewsletterTheme,),
-        permission = PNLPermissions.AddNewsletterTheme,
+        permission=AddNewsletterTheme,
         extra_constructors = (NewsletterTheme.addNewsletterTheme,),
         fti = NewsletterTheme.NewsletterTheme.factory_type_information).initialize(context)
 
     ContentInit(
         'Plone Gazette Newsletter Section',
         content_types = (Section.Section,),
-        permission = PNLPermissions.ChangeNewsletter,
+        permission = ChangeNewsletter,
         extra_constructors = (Section.addSection,),
         fti = Section.Section.factory_type_information).initialize(context)
 

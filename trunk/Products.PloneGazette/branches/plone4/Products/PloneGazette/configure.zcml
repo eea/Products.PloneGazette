@@ -3,7 +3,10 @@
 	xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
 	xmlns:five="http://namespaces.zope.org/five"
 	xmlns:browser="http://namespaces.zope.org/browser"
+	xmlns:cmf="http://namespaces.zope.org/cmf"
 	i18n_domain="plonegazette">
+
+    <cmf:registerDirectory name="PloneGazette"/>
 
 	<permission id="pg.ChangePGTheme" title="PNL Change Newsletter Theme" />
 	<permission id="pg.ExternalService" title="PNL External Service" />

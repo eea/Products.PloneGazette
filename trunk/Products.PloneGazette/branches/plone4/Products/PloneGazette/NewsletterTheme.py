@@ -9,8 +9,8 @@ from AccessControl.SecurityManagement import newSecurityManager, setSecurityMana
 from Acquisition import aq_parent
 from Globals import InitializeClass
 from OFS import Folder
-from PNLBase import PNLContentBase
-from PNLPermissions import *
+from Products.PloneGazette.PNLBase import PNLContentBase
+from Products.PloneGazette.PNLPermissions import ChangeNewsletterTheme
 from Products.CMFCore.CMFCatalogAware import CMFCatalogAware
 from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import getToolByName
@@ -18,7 +18,6 @@ from Products.CMFDefault import SkinnedFolder
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Products.CMFPlone.utils import base_hasattr, safe_unicode, log
 from Products.PageTemplates import Expressions
-from Products.PageTemplates.TALES import CompilerError
 from Products.PloneGazette import PloneGazetteFactory as _
 from Products.PloneGazette.PNLUtils import ownerOfObject, checkMailAddress
 from Products.PloneGazette.catalog import manage_addSubscribersCatalog
@@ -27,6 +26,7 @@ from Products.PloneGazette.interfaces import INewsletterTheme
 from email.Header import Header
 from zope.i18n import translate
 from zope.interface import implements
+from zope.tales.tales import CompilerError
 import csv
 import email.Message
 import email.Utils
@@ -34,6 +34,9 @@ import os
 import random
 import string
 import transaction
+
+#from Products.PageTemplates.TALES import CompilerError
+
 
 DEFAULT_UNSUBSCRIBE_TEMPLATE = """Dear subscriber,
 

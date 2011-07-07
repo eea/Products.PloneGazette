@@ -44,9 +44,7 @@
             id="email"
             value="#"
             size="40"
-            tabindex=""
-            tal:attributes="value Email;
-                            tabindex tabindex/next"/>
+            tal:attributes="value Email;"/>
     
    </div>
 
@@ -92,8 +90,7 @@
              checked="checked"
              name="active"
              id="active"
-             tal:attributes="checked python: test(active, default, nothing);
-                             tabindex tabindex/next"/>
+             tal:attributes="checked python: test(active, default, nothing);"/>
      
       </tal:block>
     </div>
@@ -105,22 +102,18 @@
         i18n:domain="plone">
     
      <input class="context"
-            tabindex=""
             type="submit"
             name="form.button.Save"
             value="Save"
             i18n:domain="plone"
-            i18n:attributes="value;
-                             tabindex tabindex/next" />
+            i18n:attributes="value;" />
 
      <input class="standalone"
-            tabindex=""
             type="submit"
             name="form.button.Cancel"
             i18n:domain="plone"
             value="Cancel"
-            i18n:attributes="value;
-                             tabindex tabindex/next" />
+            i18n:attributes="value;" />
     
    </div>
 
@@ -151,12 +144,11 @@ WARNING : the unsubscription is handled by the NewsletterTheme container,
     <div class="field">
  
       <input class="context"
-             tabindex=""
              type="submit"
              name="Unsubscribe"
              value="Unsubscribe"
              i18n:attributes="value"
-             tal:attributes="tabindex tabindex/next" />
+             />
      
     </div>
 

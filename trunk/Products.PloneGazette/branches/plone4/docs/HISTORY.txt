@@ -1,8 +1,9 @@
 Changelog
 =========
 
-2.5.15-dev - (unreleased)
+2.6.0-dev - (unreleased)
 -------------------------
+ * Feature: plone4 compatibility [tiberich #4315]
 
 2.5.14 - (2011-01-05)
 ---------------------

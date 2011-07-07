@@ -20,7 +20,9 @@ $Id$
        action=""
        method="post"
        enctype="multipart/form-data"
-       tal:define="visible_ids visible_ids|python: member.getProperty('visible_ids', None)"
+       tal:define="
+           member context/@@plone_portal_state/member;
+           visible_ids visible_ids|python: member.getProperty('visible_ids', None)"
        tal:attributes="action current_page_url|string:${here/absolute_url}/${template/getId}">
 
   <fieldset>
@@ -49,8 +51,7 @@ $Id$
            id="id"
            size="40"
            value=""
-           tal:attributes="value id;
-                           tabindex tabindex/next" />
+           tal:attributes="value id;" />
 
   </div>
 
@@ -79,7 +80,7 @@ $Id$
            value="#"
            size="40"
            tal:attributes="value Title;
-                           tabindex tabindex/next"/>
+                           "/>
   </div>
 
   <!-- Description Field -->
@@ -100,7 +101,7 @@ $Id$
               name="description"
               id="description"
               tal:content="description"
-              tal:attributes="tabindex tabindex/next">
+              >
      Description
     </textarea>
    </div>
@@ -122,7 +123,7 @@ $Id$
             name="meta_types:list"
             size="10"
             multiple="multiple"
-            tal:attributes="tabindex tabindex/next">
+            >
 
       <tal:loop tal:condition="meta_types" tal:repeat="type_tuple available_types">
         <option tal:define="meta_type python:type_tuple[0];
@@ -159,7 +160,6 @@ $Id$
               rows="11"
               cols="15"
               wrap="off"
-              tal:attributes="tabindex tabindex/next;"
               tal:content="python:'\n'.join(subjects)" />
 
    </div>
@@ -178,7 +178,7 @@ $Id$
 
     <select name="sort_on" id="sort_on"
             tal:define="indexes python:['', 'id', 'created', 'Date', 'effective', 'end', 'modified', 'start']"
-            tal:attributes="tabindex tabindex/next">
+            >
       <option tal:repeat="sort_criteria indexes"
               tal:attributes="value sort_criteria;
                               selected python:test(sort_criteria == sort_on, 'selected', None)"
@@ -200,8 +200,7 @@ $Id$
     </div>
 
     <input type="checkbox" name="reverse"
-           tal:attributes="tabindex tabindex/next;
-                           checked python:test(reverse, 1, 0)" />
+           tal:attributes="checked python:test(reverse, 1, 0)" />
 
   </div>
 
@@ -217,8 +216,7 @@ $Id$
     </div>
 
     <input type="text" name="only_review_state" id="only_review_state"
-           tal:attributes="tabindex tabindex/next;
-                           value only_review_state;"
+           tal:attributes="value only_review_state;"
            size="40" />
   </div>
 
@@ -235,8 +233,7 @@ $Id$
            name="max_objects"
            id="max_objects"
            size="40"
-           tal:attributes="value max_objects;
-                           tabindex tabindex/next"/>
+           tal:attributes="value max_objects;"/>
   </div>
 
   <!-- Submitting machinery -->
@@ -251,14 +248,14 @@ $Id$
            name="form.button.Save"
            value="Save"
            i18n:attributes="value"
-           tal:attributes="tabindex tabindex/next" />
+           />
 
     <input class="standalone"
            type="submit"
            name="form.button.Cancel"
            value="Cancel"
            i18n:attributes="value"
-           tal:attributes="tabindex tabindex/next" />
+           />
 
   </div>
 
@@ -267,10 +264,6 @@ $Id$
  </fieldset>
 
  </form>
-
- <div metal:use-macro="here/document_byline/macros/byline">
-  Get the byline - contains details about author and modification date
- </div>
 
 </div>
 

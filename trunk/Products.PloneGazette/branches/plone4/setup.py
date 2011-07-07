@@ -23,6 +23,8 @@ setup(name='Products.PloneGazette',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          "Products.TALESField",
+          "collective.monkeypatcher",
       ],
       entry_points="""
       # -*- Entry points: -*-

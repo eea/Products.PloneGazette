@@ -1,23 +1,15 @@
-
 """
 NewsletterTopic main class
 """
 
-# Standard Python imports
-
-# Zope core imports
-from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from AccessControl.SpecialUsers import nobody
-
-# CMF/Plone imports
-from Products.CMFCore.permissions import View, ModifyPortalContent
-from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
+from Globals import InitializeClass
 from Products.CMFCore.PortalContent import PortalContent
+from Products.CMFCore.permissions import View, ModifyPortalContent
 from Products.CMFCore.utils import getToolByName
-
-# Product specific imports
-from PNLBase import PNLContentBase
+from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
+from Products.PloneGazette.PNLBase import PNLContentBase
 
 #################
 ## The factory ##
@@ -77,8 +69,6 @@ class NewsletterTopic(PortalContent, DefaultDublinCoreImpl, PNLContentBase):
     ###########################
     ## Basic class behaviour ##
     ###########################
-
-    __implements__ = PortalContent.__implements__
 
     meta_type = factory_type_information['meta_type']
 
