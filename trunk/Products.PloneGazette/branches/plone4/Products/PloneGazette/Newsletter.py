@@ -649,7 +649,6 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
     @postonly
     def sendToSubscribers(self, REQUEST=None):
         """Sends that newsletter to all subscribers and extra recipients"""
-        import pdb; pdb.set_trace()
         self.sent_status = True
         transaction.commit()
         
