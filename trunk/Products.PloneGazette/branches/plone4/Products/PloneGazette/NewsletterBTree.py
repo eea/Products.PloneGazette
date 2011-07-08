@@ -25,8 +25,6 @@ class NewsletterBTree(BaseBTreeFolder, PNLContentBase):
     # Make sure we get title-to-id generation when an object is created
     _at_rename_after_creation = True
     
-    review_state = None
-        
     security.declarePublic('displayContentsTab')
     def displayContentsTab(self):
         """ do not display 'contents' tab """
