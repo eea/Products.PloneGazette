@@ -9,8 +9,6 @@ from AccessControl.SecurityManagement import newSecurityManager, setSecurityMana
 from Acquisition import aq_parent
 from Globals import InitializeClass
 from OFS import Folder
-from Products.PloneGazette.PNLBase import PNLContentBase
-from Products.PloneGazette.PNLPermissions import ChangeNewsletterTheme
 from Products.CMFCore.CMFCatalogAware import CMFCatalogAware
 from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import getToolByName
@@ -19,6 +17,8 @@ from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Products.CMFPlone.utils import base_hasattr, safe_unicode, log
 from Products.PageTemplates import Expressions
 from Products.PloneGazette import PloneGazetteFactory as _
+from Products.PloneGazette.PNLBase import PNLContentBase
+from Products.PloneGazette.PNLPermissions import ChangeNewsletterTheme
 from Products.PloneGazette.PNLUtils import ownerOfObject, checkMailAddress
 from Products.PloneGazette.catalog import manage_addSubscribersCatalog
 from Products.PloneGazette.config import PG_CATALOG

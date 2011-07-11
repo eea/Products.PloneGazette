@@ -46,6 +46,8 @@ def addSubscriber(self, id, email = '', REQUEST = {}):
 
 class Subscriber(PortalContent, DefaultDublinCoreImpl, PNLContentBase):
     """Subscriber class"""
+
+    bounces = None
     
     ########################################
     ## Registration info for portal_types ##
@@ -125,13 +127,13 @@ class Subscriber(PortalContent, DefaultDublinCoreImpl, PNLContentBase):
         return
 
     def __setstate__(self,state):
-	"""Updates"""
-	
-	Subscriber.inheritedAttribute("__setstate__") (self, state)
-	if not hasattr(self, 'fullname'):
-	    self.fullname = ''
-	if not hasattr(self, 'email'):
-	    self.email = self.title
+        """Updates"""
+        
+        Subscriber.inheritedAttribute("__setstate__") (self, state)
+        if not hasattr(self, 'fullname'):
+            self.fullname = ''
+        if not hasattr(self, 'email'):
+            self.email = self.title
 
     #############################
     ## Content editing methods ##
@@ -178,7 +180,7 @@ class Subscriber(PortalContent, DefaultDublinCoreImpl, PNLContentBase):
     security.declarePublic('is_bouncing')
     def is_bouncing(self):
         """Is this subscriber bouncing? """
-        return len(self.bounces) >= MAXIMUM_BOUNCES
+        return self.bounces and (len(self.bounces) >= MAXIMUM_BOUNCES)
     
     #####################
     ## Utility methods ##
@@ -205,7 +207,7 @@ class Subscriber(PortalContent, DefaultDublinCoreImpl, PNLContentBase):
     # If subscribers container contains more then 10.000 subscriber
     # objects this function make the add process to take minutes
     def reindexObjectSecurity(self, skip_self=False):
-	pass
+        pass
 
 # Class instanciation
 InitializeClass(Subscriber)
