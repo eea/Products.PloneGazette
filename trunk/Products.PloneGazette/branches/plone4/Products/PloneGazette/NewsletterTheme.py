@@ -7,7 +7,7 @@
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from AccessControl.SecurityManagement import newSecurityManager, setSecurityManager
 from Acquisition import aq_parent
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from OFS import Folder
 from Products.CMFCore.CMFCatalogAware import CMFCatalogAware
 from Products.CMFCore.permissions import View

@@ -3,6 +3,7 @@ Changelog
 
 2.6.0-dev - (unreleased)
 -------------------------
+ * Changes: Fixed Deprecation messages [szabozo0 #4423]
  * Feature: plone4 compatibility [tiberich #4315]
 
 2.5.14 - (2011-01-05)

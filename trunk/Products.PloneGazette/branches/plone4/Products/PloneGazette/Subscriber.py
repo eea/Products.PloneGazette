@@ -10,7 +10,7 @@ Subscriber main class
 import string
 
 # Zope core imports
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from AccessControl import Permissions, getSecurityManager, ClassSecurityInfo, Unauthorized
 from AccessControl.SecurityManagement import newSecurityManager
 

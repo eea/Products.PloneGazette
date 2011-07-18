@@ -7,7 +7,7 @@
 __version__ = "$Revision: 110864 $" [11:-2]
 
 # Zope core import
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from AccessControl import Permissions, getSecurityManager, ClassSecurityInfo, Unauthorized
 
 # CMF/Plone imports

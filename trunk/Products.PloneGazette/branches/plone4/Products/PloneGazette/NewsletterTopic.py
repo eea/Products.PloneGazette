@@ -4,7 +4,7 @@ NewsletterTopic main class
 
 from AccessControl import ClassSecurityInfo
 from AccessControl.SpecialUsers import nobody
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from Products.CMFCore.PortalContent import PortalContent
 from Products.CMFCore.permissions import View, ModifyPortalContent
 from Products.CMFCore.utils import getToolByName

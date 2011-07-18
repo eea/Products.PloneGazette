@@ -1,4 +1,4 @@
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from AccessControl import ClassSecurityInfo
 from AccessControl.SpecialUsers import nobody
 from OFS import Folder
@@ -15,7 +15,7 @@ try:
     hasZopeOrderedSupport=1
 except ImportError:
     hasZopeOrderedSupport=0
-from Products.CMFPlone.interfaces.OrderedContainer import IOrderedContainer
+from OFS.interfaces import IOrderedContainer
 
 #################
 ## The factory ##

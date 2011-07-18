@@ -9,7 +9,7 @@ from AccessControl.SpecialUsers import nobody
 from AccessControl.requestmethod import postonly
 from DateTime import DateTime
 from DocumentTemplate.DT_Util import html_quote
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from OFS import Folder
 from PNLBase import PNLContentBase
 from PNLPermissions import ChangeNewsletter
