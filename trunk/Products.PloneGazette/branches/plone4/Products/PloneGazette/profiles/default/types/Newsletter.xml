@@ -20,8 +20,7 @@
  <property name="allow_discussion">False</property>
  <alias from="(Default)" to="Newsletter_view"/>
  <alias from="edit" to="base_edit"/>
- <alias from="properties" to="base_metadata"/>
- <alias from="sharing" to="@@sharing"/>
+  <alias from="sharing" to="@@sharing"/>
  <alias from="view" to="Newsletter_view"/>
  <action title="View" action_id="view" category="object" condition_expr=""
     url_expr="string:${object_url}/Newsletter_view" visible="True">

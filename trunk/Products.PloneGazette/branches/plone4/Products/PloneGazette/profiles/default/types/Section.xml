@@ -18,7 +18,6 @@
  <property name="allow_discussion">False</property>
  <alias from="(Default)" to="Section_view"/>
  <alias from="edit" to="Section_editForm"/>
- <alias from="properties" to="metadata_edit_form"/>
  <alias from="view" to="Section_view"/>
  <action title="View" action_id="view" category="object" condition_expr=""
     url_expr="string:${object_url}/Section_view" visible="True">
@@ -31,11 +30,6 @@
  </action>
  <action title="Edit" action_id="edit" category="object" condition_expr=""
     url_expr="string:${object_url}/Section_editForm" visible="True">
-  <permission value="PNL Change Newsletter"/>
- </action>
- <action title="Properties" action_id="metadata" category="object"
-    condition_expr="" url_expr="string:${object_url}/metadata_edit_form"
-    visible="True">
   <permission value="PNL Change Newsletter"/>
  </action>
 </object>
