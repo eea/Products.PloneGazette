@@ -6,6 +6,7 @@
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from AccessControl.SecurityManagement import newSecurityManager, setSecurityManager
+from AccessControl import SpecialUsers
 from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from OFS import Folder
@@ -402,7 +403,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
                 # Continue method as owner of this object for "invokeFactory" security checkings.
                 # (creating new objects through invokeFactory is not possible as anonymous because an owner is required)
                 oldSecurityManager = getSecurityManager()
-                newSecurityManager(REQUEST, ownerOfObject(self))
+                newSecurityManager(REQUEST, SpecialUsers.system)
                 newSubscriber = self.createSubscriberObject(newId)
                 newSubscriber.edit(format=format, active=0, email=emailaddress)
                 setSecurityManager(oldSecurityManager)

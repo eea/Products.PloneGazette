@@ -1,6 +1,11 @@
 Changelog
 =========
 
+
+4.0-dev - (unreleased)
+----------------------
+ * Bugfix: Changed to subscription to newsletter to use SpecialUsers.system user [szabozo #4510]
+ 
 2.6.0-dev - (unreleased)
 -------------------------
  * Changes: Fixed Deprecation messages [szabozo0 #4423]
