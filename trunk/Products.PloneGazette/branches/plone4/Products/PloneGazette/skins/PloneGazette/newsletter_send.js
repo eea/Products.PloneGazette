@@ -1,3 +1,4 @@
+(function($) {
 NewsletterSend = function(context){
     var self = this;
     var base = $("base").attr('href') || document.baseURI || window.location.href.split("?")[0];
@@ -56,3 +57,4 @@ NewsletterSend.prototype.check_sent_status = function(){
         }
     });
 }
+})(jQuery);

@@ -4,6 +4,9 @@ Changelog
 
 4.0-dev - (unreleased)
 ----------------------
+ * Bugfix: Fixed IE JS errors, fixed code that uses jQuery to avoid conflicts
+   with other JS frameworks [szabozo0 #4542]
+
  * Bugfix: Changed to subscription to newsletter to use SpecialUsers.system user [szabozo #4510]
  
 2.6.0-dev - (unreleased)
