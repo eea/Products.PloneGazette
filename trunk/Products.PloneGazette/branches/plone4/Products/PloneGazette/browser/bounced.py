@@ -2,7 +2,7 @@ from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import base_hasattr
 from Products.Five import BrowserView
-from Products.Five.formlib import formbase
+from five.formlib import formbase
 from Products.PloneGazette import PloneGazetteFactory as _
 from Products.PloneGazette.browser.base import PGBaseViewMixin
 from Products.PloneGazette.config import PG_CATALOG
