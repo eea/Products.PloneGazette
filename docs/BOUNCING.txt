@@ -1,0 +1,42 @@
+Removing bouncing subscribers
+=============================
+
+Note: Unless you have the external utility that can detect 
+bouncing subscribers and make the call into PloneGazette,
+you can safely ignore the Removal of Bouncing Subscribers
+included in this version of PloneGazette.
+
+As a rule, you don't want to send emails to bouncing subscribers. 
+As of February 2010, this product has some support to automate
+removing of those subscribers which are found to be bouncing. 
+
+The goal was to minimize the impact on the existing system
+architecture, so we have two pieces that need to be conected 
+together:
+
+1. Inside PloneGazette, the NewsletterTheme has now several
+new fields.
+
+	* the extra filters, which is a string field where you can
+	  enter regular expressions (one per line), that can be used
+		against the Delivery Status report found in returned email
+		messages, to determine their bounciness.
+	* the VERP prefix: this is a unique string that should be 
+	  communicated to your SMTP administrator. He/she should setup
+		the email server to receive messages for users who'se name
+		contains that string
+	* automatic cleanup: if enabled, will cause automatic removal
+	  of subscribers which are found to be hard bouncing for a 
+		number above a certain threshold (which is configurable in
+		Products.PloneGazette.config)
+	* the template of the email that will inform the subscribers
+	  that they have been automatically removed
+
+2. You need an external utility that can make the call into 
+   PloneGazette informing it about the bouncing subscribers.
+	 This is not included with PloneGazette.
+
+Note: There are special upgrade requirements needed to enable
+      the bouncing support in PloneGazette. Please read the
+			instructions on upgrading to PG 2.5.1 to find out
+			what you need to do.
