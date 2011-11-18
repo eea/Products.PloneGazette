@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+	metal:use-macro="here/main_template/macros/master"
+	i18n:domain="plonegazette">
+	<head>
+		<title i18n:translate="">Manage bounced subscribers</title>
+	</head>
+	<body>
+		<div metal:fill-slot="main">
+			<h1 i18n:translate="">Manage bounced subscribers</h1>
+			<p>
+				<a href="./add_bounced_subscribers" i18n:translate="">Add bouncing subscribers</a>
+			</p>
+			<form method="POST" action="." tal:attributes="action request/URL" 
+				tal:define="bounced context/get_bouncing_subscribers">
+				<input name="SUBMIT" type="submit" value="Delete bouncing subscribers" i18n:attributes="value" />
+				<p i18n:translate="">
+					The following <span i18n:name="no" tal:content="python:len(bounced)">0</span> subscribers 
+					will be deleted:
+				</p>
+				<ul>
+					<li tal:repeat="b bounced" >
+						<strong tal:content="b/email">someone@example.com</strong> | 
+						<span tal:repeat="n b/bounces" tal:replace="n">newsletter-1</span>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</body>
+</html>
+
