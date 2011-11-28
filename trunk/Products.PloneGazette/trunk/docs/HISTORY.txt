@@ -3,10 +3,11 @@ Changelog
 
 4.2-dev - (unreleased)
 ----------------------
+* Bug fix: Fixed send emails [ghicaale #4792]
 
 4.1 - (2011-11-18)
 ------------------
-* Rerelease broken egg  
+* Rerelease broken egg
 
 4.0 - (2011-11-18)
 ------------------
@@ -47,14 +48,14 @@ Changelog
 
 2.5.2 - 2010-05-06
 ------------------
- - No longer write Return-Path header in newsletter emails, our 
+ - No longer write Return-Path header in newsletter emails, our
    mail servers can't handle it
 
 2.5.1 - 2010-02-12
 ------------------
- - non-linear history. Renamed the version to 2.5.1, to indicate 
+ - non-linear history. Renamed the version to 2.5.1, to indicate
    the Plone 2.5 affiliation
- - add extensions to remove subscribers based on their status as bouncers. 
+ - add extensions to remove subscribers based on their status as bouncers.
    Bouncing status needs to be determined externally and recorded into Zope
    through a web call. More details are found in the BOUNCING.txt file
    [afd]
@@ -68,10 +69,10 @@ r71202
  - Added 4 new properties on NewsletterTheme: unsubscribeMailSubject, unsubscribeMailTemplate, confirmMailSubject, confirmMailTemplate
     - Subscriber receive and email after he unsubscribe, so he/she know that is no longer subscribed
     - When a subscriber choose to unsubscribe he/she receive an email containing an url with a unique unsubscribe
-      link (similar to activation procedure) to confirm the unsubscribe, due to the fact that for example anyone can 
+      link (similar to activation procedure) to confirm the unsubscribe, due to the fact that for example anyone can
       unsubscribe someone if knows his/her email address
-    - Similar to 'Subscriber activation mail subject' and 'Subscriber activation mail template', 4 new properties in 
-      order to customize 'Confirm unsubscribe mail subject', 'Confirm unsubscribe mail template', 'Unsubscribe mail 
+    - Similar to 'Subscriber activation mail subject' and 'Subscriber activation mail template', 4 new properties in
+      order to customize 'Confirm unsubscribe mail subject', 'Confirm unsubscribe mail template', 'Unsubscribe mail
       subject' and 'Unsubscribe mail template'
    [alecghica]
  - Allow values for 'Newsletter author email' like: Author name <author@author.org> (see validate_newslettertheme_edit.vpy)
@@ -89,8 +90,8 @@ r71202
 
 r71034
 ------
- - Fixed the huge amount of time taken to add a subscriber under a context where are already at least 5.000 of 
-   other subscriber objects 
+ - Fixed the huge amount of time taken to add a subscriber under a context where are already at least 5.000 of
+   other subscriber objects
    [alecghica]
 
 3.0.0 - 2008-07-11
@@ -118,7 +119,7 @@ r71034
 3.0.0-rc1 - 2008-02-17
 ----------------------
   - fixed attribute error when accessing NewsletterBTree folder contents (#30)
-  - fixed UnicodeError when activation subject or body contains non ascii 
+  - fixed UnicodeError when activation subject or body contains non ascii
     characters
   - PG is registered to all skins layers
   - another subscribers catalog fix. Catalog is based on CMFCore. catalog tool instead of ZCatalog
@@ -133,32 +134,32 @@ r71034
   - only major change against 2.5 version is creation of subscribers catalog
     inside NewsletterTheme objects. All Subscribers are stored in the subscribers_catalog
     to be easily and fast found and listed.
-  - Content types are still CMF based, code is not polished and optimized. 
+  - Content types are still CMF based, code is not polished and optimized.
   - removed Extensions/ dir, added basic GS profile with content types and skin layer
   - use secureSend. Emails are generated as email.Message.Message instances and not strings
   - make all forms and object manipulation working in Plone 3
-  - cutoff Plone 3.0 compatible version. Dropped Plone 2.1 and 2.5 compatibility. 
-    If you want to use PloneGazette on Plone 2.5, use 2.5 branch and versions in 
+  - cutoff Plone 3.0 compatible version. Dropped Plone 2.1 and 2.5 compatibility.
+    If you want to use PloneGazette on Plone 2.5, use 2.5 branch and versions in
     PloneGazette 2.5 line.
 
-2.5.0-beta1 - 2007-11-25 
+2.5.0-beta1 - 2007-11-25
 ------------------------
   - fixed HTML markup in subscriber edit form to support <label> in radio boxes
   - fixed testSendToMe
-  - fixed toLocalizedTime definition (plone 2.5). Thanks to Andrew Kornilov for 
+  - fixed toLocalizedTime definition (plone 2.5). Thanks to Andrew Kornilov for
     pointing to it.
     [naro]
 
 2.5.0-alpha1 - 2007-11-24
 -------------------------
   - replaced toPortalTime with toLocalizedTime in Newsletter view. Fixes #11
-  - added getFolderContents method to the NewsletterTheme. 
+  - added getFolderContents method to the NewsletterTheme.
     This fixes  #4 — Subscribers do not appear in folder listing or view
-  - do not use secureSend in combination with email.Message.Message. 
-    There is bug in SecureMailHost used in plone 2.5 which prevents this 
+  - do not use secureSend in combination with email.Message.Message.
+    There is bug in SecureMailHost used in plone 2.5 which prevents this
     combination (#6504)
   - trying to stay compatible with Plone 2.1 for the moment
-  - removed metadata and duplicate Contents tab from newslettertheme and 
+  - removed metadata and duplicate Contents tab from newslettertheme and
     newsletter
     [naro]
 

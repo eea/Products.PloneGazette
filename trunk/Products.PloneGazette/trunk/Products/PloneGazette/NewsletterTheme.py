@@ -78,7 +78,7 @@ DEFAULT_REMOVE_NOTICE_TEMPLATE = """Dear subscriber,
 You received this email because you have just been automatically removed from our
 newsletter service %(url_service)s.
 
-This action was caused by the repeated failure to deliver the newsletter that you 
+This action was caused by the repeated failure to deliver the newsletter that you
 have signed up for. If you wish to receive the newsletter you'll have to register
 again at %(url_register)s.
 
@@ -89,7 +89,7 @@ ADMIN_REMOVAL_REPORT_TEMPLATE = """Dear newsletter admin,
 You are receiving this report because this email address is configured as the
 notification address for the Newsletter Service at %(url_service)s.
 
-As a result of automatic checks for bounced subscribers, the following %(no)s 
+As a result of automatic checks for bounced subscribers, the following %(no)s
 subscribers have been removed permanently:
 
 %(addresses)s
@@ -442,7 +442,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
                 mailMsg.epilogue="\n" # To ensure that message ends with newline
 
                 try:
-                    #TODO: is 
+                    #TODO: is
                     self.sendmail(self.authorEmail, (emailaddress,), mailMsg, subject = mailMsg['subject'])
                 except Exception, e:
                     raise
@@ -569,14 +569,14 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
         mailMsg["Message-ID"]=email.Utils.make_msgid()
         mailMsg["Mime-version"]="1.0"
 
-        bodyText = self.removeNoticeTemplate % {'url_service': url_service, 
+        bodyText = self.removeNoticeTemplate % {'url_service': url_service,
                                                 'url_register':url_register}
         mailMsg["Content-type"]="text/plain"
         mailMsg.set_payload(safe_unicode(bodyText).encode(charset), charset)
         mailMsg.epilogue="\n" # To ensure that message ends with newline
 
         try:
-            self.sendmail(self.authorEmail, subscriber_email, 
+            self.sendmail(self.authorEmail, subscriber_email,
                                 mailMsg, subject = mailMsg['subject'])
         except:
             log("Could not send a PloneGazzette unsubscribe message to %s, removing subscriber anyway." % subscriber_email)
@@ -602,7 +602,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
 
         bodyText = ADMIN_REMOVAL_REPORT_TEMPLATE % {'url_service': url_service,
                                                     'no':len(addresses),
-                                                    'addresses':'\n'.join(addresses)} 
+                                                    'addresses':'\n'.join(addresses)}
         mailMsg["Content-type"]="text/plain"
         mailMsg.set_payload(safe_unicode(bodyText).encode(charset), charset)
         mailMsg.epilogue="\n" # To ensure that message ends with newline
@@ -643,7 +643,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
 
         @param all_data: A list of all newsletter ids, ordered by their date
         @param initial_data: A list of newsletter ids that are already recorded as bounced
-        @param new_id: The newsletter id which we need to find out if it's 
+        @param new_id: The newsletter id which we need to find out if it's
                        consecutive to those in initial_data
         """
         x = all_data.index(initial_data[-1])
@@ -653,7 +653,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
     security.declareProtected("PNL External Service", "add_bounced_subscribers")
     def add_bounced_subscribers(self, bounced):
         """Adds bouncing statuses to subscribers.
-        
+
         Called by xmlrpc and the manage_add_bounced_subscribers view
         """
         bounces = []
@@ -733,7 +733,9 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
         """"""
         portal = getToolByName(self, 'portal_url').getPortalObject()
         mail_host = getattr(self, 'MailHost', None)
-        mail_host.secureSend(mailBody, mailto, mailfrom, subject=subject)
+        #mail_host.secureSend(mailBody, mailto, mailfrom, subject=subject)
+        mail_host.send(mailBody, mto=mailto, mfrom=mailfrom,
+                       subject=subject, msg_type='text/html')
 
     security.declarePublic('getRenderTemplate')
     def getRenderTemplate(self, recompile=0):
