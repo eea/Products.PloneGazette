@@ -1,8 +1,8 @@
 Changelog
 =========
 
-4.2-dev - (unreleased)
-----------------------
+4.2 - (2011-11-28)
+------------------
 * Bug fix: Fixed send emails [ghicaale #4792]
 
 4.1 - (2011-11-18)
