@@ -577,13 +577,14 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
 
         mailMethod = theme.sendmail
 
-        titleForMessage = Header(safe_unicode(self.title), charset=charset, 
-                                     header_name='Subject')
         # related item
         if self.hasExternalRelation() and self.checkRelated():
-            titleForMessage = Header(safe_unicode(self.getRelatedObject().Title(), 
-                charset=charset, header_name='Subject'))
+            titleForMessage = safe_unicode(self.getRelatedObject().Title())
+        else:
+            titleForMessage = safe_unicode(self.title)
 
+        titleForMessage = Header(titleForMessage, header_name='Subject', 
+                                 charset=charset)
         portal_url = getToolByName(self, 'portal_url')()
 
         self.sendBeginSendNotification()
@@ -595,12 +596,13 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
             mainMsg         = email.Message.Message()
             mainMsg["To"]   = mailTo
             mainMsg["From"] = mailFrom
-            #deactivated because EEA mailserver can't handle it
-            #mainMsg['Return-Path']=make_verp(mailTo, self.id, verp_prefix)
             mainMsg["Subject"]      = titleForMessage
             mainMsg["Date"]         = email.Utils.formatdate(localtime = 1)
             mainMsg["Message-ID"]   = email.Utils.make_msgid()
             mainMsg["Mime-version"] = "1.0"
+
+            #deactivated because EEA mailserver can't handle it
+            #mainMsg['Return-Path']=make_verp(mailTo, self.id, verp_prefix)
 
             if format == 'HTML':
                 new_htmlTpl = htmlTpl
@@ -635,7 +637,7 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
                 mainMsg.epilogue="\n" # To ensure that message ends with newline
 
             try:
-                mailMethod(mailFrom, (mailTo,), mainMsg, subject=str(titleForMessage))
+                mailMethod(mailFrom, (mailTo,), mainMsg)
             except Exception,e:
                 errors.append(mailTo)
                 tbfile = cStringIO.StringIO()

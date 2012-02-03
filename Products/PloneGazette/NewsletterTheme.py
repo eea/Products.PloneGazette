@@ -735,7 +735,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
         mail_host = getattr(self, 'MailHost', None)
         #mail_host.secureSend(mailBody, mailto, mailfrom, subject=subject)
         mail_host.send(mailBody, mto=mailto, mfrom=mailfrom,
-                       subject=subject, msg_type='text/html')
+                           subject=subject, msg_type='text/html')
 
     security.declarePublic('getRenderTemplate')
     def getRenderTemplate(self, recompile=0):
