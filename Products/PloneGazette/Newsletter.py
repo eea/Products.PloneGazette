@@ -577,10 +577,12 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
 
         mailMethod = theme.sendmail
 
-        titleForMessage = str(Header(safe_unicode(self.title), charset))
+        titleForMessage = Header(safe_unicode(self.title), charset=charset, 
+                                     header_name='Subject')
         # related item
         if self.hasExternalRelation() and self.checkRelated():
-            titleForMessage = str(Header(safe_unicode(self.getRelatedObject().Title(), charset)))
+            titleForMessage = Header(safe_unicode(self.getRelatedObject().Title(), 
+                charset=charset, header_name='Subject'))
 
         portal_url = getToolByName(self, 'portal_url')()
 
@@ -590,15 +592,15 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
             if theme.alternative_portal_url:
                 editurl = editurl.replace(portal_url,
                                           theme.alternative_portal_url)
-            mainMsg=email.Message.Message()
-            mainMsg["To"]=mailTo
-            mainMsg["From"]=mailFrom
+            mainMsg         = email.Message.Message()
+            mainMsg["To"]   = mailTo
+            mainMsg["From"] = mailFrom
             #deactivated because EEA mailserver can't handle it
             #mainMsg['Return-Path']=make_verp(mailTo, self.id, verp_prefix)
-            mainMsg["Subject"]=titleForMessage
-            mainMsg["Date"]=email.Utils.formatdate(localtime=1)
-            mainMsg["Message-ID"]=email.Utils.make_msgid()
-            mainMsg["Mime-version"]="1.0"
+            mainMsg["Subject"]      = titleForMessage
+            mainMsg["Date"]         = email.Utils.formatdate(localtime = 1)
+            mainMsg["Message-ID"]   = email.Utils.make_msgid()
+            mainMsg["Mime-version"] = "1.0"
 
             if format == 'HTML':
                 new_htmlTpl = htmlTpl
@@ -633,7 +635,7 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
                 mainMsg.epilogue="\n" # To ensure that message ends with newline
 
             try:
-                mailMethod(mailFrom, (mailTo,), mainMsg, subject = titleForMessage)
+                mailMethod(mailFrom, (mailTo,), mainMsg, subject=str(titleForMessage))
             except Exception,e:
                 errors.append(mailTo)
                 tbfile = cStringIO.StringIO()
