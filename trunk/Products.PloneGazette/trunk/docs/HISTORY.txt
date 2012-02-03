@@ -3,6 +3,7 @@ Changelog
 
 4.3-dev - (unreleased)
 ----------------------
+ * Bug fix: fixed sending newsletters when subject had non-ascii characters and exceeded 60 chars [tiberich #4923]
 
 4.2 - (2011-11-28)
 ------------------
