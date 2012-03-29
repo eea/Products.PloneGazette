@@ -546,9 +546,9 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
             self.sendmail(self.authorEmail, (subscriber_email,), mailMsg, subject = mailMsg['subject'])
 
             parent = subscriber.aq_parent
+            newSecurityManager(REQUEST, ownerOfObject(self))
             parent.manage_delObjects([subscriber_id,])
 
-        newSecurityManager(REQUEST, ownerOfObject(self))
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(self.absolute_url() + '/NewsletterTheme_unsubscribed')
         return
