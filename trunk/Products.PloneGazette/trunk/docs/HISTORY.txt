@@ -1,8 +1,8 @@
 Changelog
 =========
 
-4.4-dev - (unreleased)
-----------------------
+4.4 - (2012-04-26)
+------------------
  * Bug fix: fix unsubscribe yielding security error [tiberich #5031]
 
 4.3 - (2012-02-06)
