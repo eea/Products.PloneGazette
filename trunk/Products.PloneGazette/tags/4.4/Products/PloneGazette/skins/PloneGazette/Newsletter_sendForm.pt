@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<tal:comment tal:replace="nothing">
+  $Id$
+</tal:comment>
+<html metal:use-macro="here/main_template/macros/master"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xml:lang="en-US"
+  lang="en-US">
+  <head metal:fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="newsletter_send.js" 
+      tal:attributes="src string:$portal_url/newsletter_send.js"></script>
+  </head>
+
+  <body metal:fill-slot="main" i18n:domain="plonegazette">
+
+    <h1 i18n:translate="heading_send_newsletter">
+      Send newsletter
+    </h1>
+
+    <div class="error" tal:condition="python: here.getSendStatus() == 'OK' and not here.dateEmitted" 
+      i18n:translate="text_getSend">
+      This newsletter is in the process of being sent.
+    </div>
+
+    <div class="error" tal:condition="here/dateEmitted" i18n:translate="text_hasbeensend">
+      This newsletter has been sent on <span i18n:name="date" tal:replace="here/dateEmitted">Date</span>.
+    </div>
+
+    <p tal:define="stats python:here.getTheme().subscriberStats()[0]">
+      <span tal:omit-tag="" i18n:translate="text_send_to_recipients">You're about to send this newsletter to <span i18n:name="total" tal:replace="stats/totalactive">120</span> subscriber(s).
+        <span tal:replace="stats/htmlactive" i18n:name="count_html">100</span> will receive it in HTML when 
+        <span tal:replace="stats/plaintextactive" i18n:name="count_plain">20</span> will receive it in plain text</span>.
+    </p>
+    <p>2 email messages will be sent to <span tal:content="context/aq_parent/testEmail" />. One is sent before
+      the newsletter delivery starts, and another one when the newsletter delivery finishes.</p>
+    <p tal:condition="python:here.getTheme().getExtraRecipients()"
+      tal:define="stats python:here.getTheme().extraRecipientStats()">
+      <span tal:omit-tag="" i18n:translate="text_send_extra">In addition, this
+        newsletter will be sent to <span i18n:name="total"
+          tal:replace="stats/total">100</span> extra recipient(s).
+        <span tal:replace="stats/html" i18n:name="count_html">100</span> will receive it in HTML when
+        <span tal:replace="stats/plaintext" i18n:name="count_plain">20</span> will receive it in plain text</span>
+    </p>
+
+    <form method="post" id="sendform" action="./sendToSubscribers"
+      tal:attributes="action string:${here/absolute_url}/sendToSubscribers">
+      <input class="context" type="submit" 
+        value="Send to all subscribers" i18n:attributes="value" />
+    </form>
+    <script>
+      new NewsletterSend($("#sendform"));
+    </script>
+
+    <div tal:define="errors options/errors|nothing" tal:condition="errors">
+      <p i18n:translate="smtp_errors_subscribers">The SMTP reported errors
+        when sending the newsletter to these subscribers</p>
+      <ul>
+        <li tal:repeat="item errors"
+          tal:content="item">machin@truc.com</li>
+      </ul>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,10 @@
+[default]
+title=google analytics form
+
+[security]
+View=0:Authenticated
+
+[actions]
+action.success=traverse_to:string:NewsletterTheme_google
+action.success..Cancel=redirect_to_action:string:NewsletterTheme_googleForm
+action.failure=traverse_to:string:NewsletterTheme_googleForm
