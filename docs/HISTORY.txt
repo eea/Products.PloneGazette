@@ -3,10 +3,13 @@ Changelog
 
 4.5-dev - (unreleased)
 ----------------------
+ * Bug fix: fixed register_newsletter.py script not to raise
+   error when is called with wrong parameters
+   [ghicaale fixes #5220]
 
 4.4 - (2012-04-26)
 ------------------
- * Bug fix: fix unsubscribe yielding security error [tiberich #5031]
+ * Bug fix: fixed unsubscribe yielding security error [tiberich #5031]
 
 4.3 - (2012-02-06)
 ------------------
@@ -14,11 +17,11 @@ Changelog
 
 4.2 - (2011-11-28)
 ------------------
-* Bug fix: Fixed send emails [ghicaale #4792]
+ * Bug fix: Fixed send emails [ghicaale #4792]
 
 4.1 - (2011-11-18)
 ------------------
-* Rerelease broken egg
+ * Rerelease broken egg
 
 4.0 - (2011-11-18)
 ------------------

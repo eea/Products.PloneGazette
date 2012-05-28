@@ -4,7 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=nlpath, email, format=None, REQUEST=None
+##parameters=nlpath=None, email=None, format=None, REQUEST=None
 ##title=Newsletter subscription hub
 ##
 # ******************************************************************
@@ -13,18 +13,27 @@
 #
 # Handles the subscription form from newsletter_slot
 #
-# $Id$
-#
 from Products.PythonScripts.standard import url_quote
 
 if REQUEST is None:
     REQUEST = context.REQUEST
-    
-nlcentral = context.restrictedTraverse(nlpath)
 
+nlcentral = context.restrictedTraverse(nlpath, None)
+
+# Case of wrong parameters
+if nlcentral is None:
+    REQUEST.RESPONSE.redirect(context.portal_url())
+    return
+
+# Case of wrong parameters
+if nlcentral.portal_type != 'NewsletterTheme':
+    REQUEST.RESPONSE.redirect(context.portal_url())
+    return
+
+# Subscribe action
 if format is None:
     format = nlcentral.default_format
-    
+
 actions = context.portal_actions.listFilteredActionsFor(object=nlcentral)
 url = [action['url'] for action in actions['object']
        if action['id'] == 'subscribe'][0]
