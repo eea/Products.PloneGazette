@@ -19,6 +19,17 @@
 		provides="Products.GenericSetup.interfaces.EXTENSION"
 		/>
 
+    <class class="Products.PloneGazette.PNLBase.PNLContentBase">
+      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    </class>
+    <class class="Products.PloneGazette.NewsletterReference.NewsletterReference">
+      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    </class>
+    <class class="Products.PloneGazette.NewsletterRichReference.NewsletterRichReference">
+      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    </class>
+    
+
 	<include package=".browser" />
 
 </configure>
