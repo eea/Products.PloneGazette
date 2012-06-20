@@ -1,8 +1,8 @@
 Changelog
 =========
 
-4.6-dev - (unreleased)
-----------------------
+4.6 - (2012-06-20)
+------------------
 * Bug fix: Fixed discussion errors on newsletters
   [szabozo0 refs #5282]
 * Upgrade step: in @@types-controlpanel make sure comments are not allowed for Newsletters
