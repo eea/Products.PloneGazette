@@ -36,7 +36,9 @@ import random
 import string
 import transaction
 
+from Products.CMFDefault.utils import checkEmailAddress
 #from Products.PageTemplates.TALES import CompilerError
+from Products.CMFDefault.exceptions import EmailAddressInvalid
 
 
 DEFAULT_UNSUBSCRIBE_TEMPLATE = """Dear subscriber,
@@ -390,7 +392,12 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
             format = REQUEST.form.get('format', self.default_format)
             data['format'] = format
 
-            if not checkMailAddress(self,emailaddress):
+            # #5353 use checkEmailAddress from plone_utils instead of
+            # checkMailAddress from PUTils of PloneGazzete as the plone
+            # email validator is better at detecting invalid addreses
+            try:
+                checkEmailAddress(emailaddress)
+            except EmailAddressInvalid:
                 errors['email'] = _('This is not a valid mail address')
                 return data, errors
 
@@ -952,7 +959,9 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
             email = email.strip()
 
             # check mail address validity
-            if not checkMailAddress(self,email):
+            try:
+                checkEmailAddress(email)
+            except EmailAddressInvalid:
                 not_valid.append(email)
             else:
 
