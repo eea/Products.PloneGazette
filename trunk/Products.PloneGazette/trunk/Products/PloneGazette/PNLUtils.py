@@ -5,10 +5,19 @@
 """Misc utilities"""
 
 import re
+from Products.CMFDefault.utils import checkEmailAddress
+from Products.CMFDefault.exceptions import EmailAddressInvalid
 
-def checkMailAddress(obj,someAddr):
+def checkMailAddress(obj, someAddr):
     """Checks the validity of a mail address"""
-    return obj.plone_utils.validateSingleEmailAddress(someAddr)
+    # #5353 use checkEmailAddress from CMFDefault utils instead of
+    # validateSingleEmailAddress from plone_utils as the plone email validator 
+    # is better at detecting invalid addreses
+    try:
+        checkEmailAddress(someAddr)
+    except EmailAddressInvalid:
+        return False
+    return True
 
 from AccessControl import SpecialUsers
 
