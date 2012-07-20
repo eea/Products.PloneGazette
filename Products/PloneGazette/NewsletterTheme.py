@@ -36,9 +36,7 @@ import random
 import string
 import transaction
 
-from Products.CMFDefault.utils import checkEmailAddress
 #from Products.PageTemplates.TALES import CompilerError
-from Products.CMFDefault.exceptions import EmailAddressInvalid
 
 
 DEFAULT_UNSUBSCRIBE_TEMPLATE = """Dear subscriber,
@@ -392,12 +390,7 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
             format = REQUEST.form.get('format', self.default_format)
             data['format'] = format
 
-            # #5353 use checkEmailAddress from plone_utils instead of
-            # checkMailAddress from PUTils of PloneGazzete as the plone
-            # email validator is better at detecting invalid addreses
-            try:
-                checkEmailAddress(emailaddress)
-            except EmailAddressInvalid:
+            if not self.checkMailAddress(emailaddress):
                 errors['email'] = _('This is not a valid mail address')
                 return data, errors
 
@@ -617,7 +610,9 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
         self.sendmail(self.authorEmail, (admin_email), mailMsg, subject = mailMsg['subject'])
 
     def checkMailAddress(self, mail):
-        return  checkMailAddress(self,mail)
+        """ Check Email address and return a boolean with the indicated result
+        """
+        return checkMailAddress(self, mail)
 
     def checkTalExpressions(self, talExpressions, state=None, errors=None):
         """
@@ -959,12 +954,9 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
             email = email.strip()
 
             # check mail address validity
-            try:
-                checkEmailAddress(email)
-            except EmailAddressInvalid:
+            if not self.checkMailAddress(email):
                 not_valid.append(email)
             else:
-
                 # check if subscriber already exist
                 if self.alreadySubscriber(email):
                     already_used.append(email)
