@@ -3,9 +3,8 @@ Changelog
 
 4.7-dev - (unreleased)
 ----------------------
-* Bug fix: use checkEmailAddress from ploneUtils instead of using customized 
-  checkMailAddress when checking if email address is valid 
-  [ichimdav #5353]
+* Bug fix: now using IMailer utility instead of MailHost tool to send emails
+  [tiberich #5382]
 
 4.6 - (2012-06-20)
 ------------------

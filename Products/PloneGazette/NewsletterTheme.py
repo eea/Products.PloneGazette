@@ -4,9 +4,9 @@
 
 """NewsletterCentral class"""
 
+from AccessControl import SpecialUsers
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from AccessControl.SecurityManagement import newSecurityManager, setSecurityManager
-from AccessControl import SpecialUsers
 from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from OFS import Folder
@@ -16,6 +16,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFDefault import SkinnedFolder
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Products.CMFPlone.utils import base_hasattr, safe_unicode, log
+from Products.MailHost.MailHost import _mungeHeaders
 from Products.PageTemplates import Expressions
 from Products.PloneGazette import PloneGazetteFactory as _
 from Products.PloneGazette.PNLBase import PNLContentBase
@@ -733,11 +734,12 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
     security.declarePublic('sendmail')
     def sendmail(self, mailfrom, mailto, mailBody, subject = None):
         """"""
-        portal = getToolByName(self, 'portal_url').getPortalObject()
-        mail_host = getattr(self, 'MailHost', None)
-        #mail_host.secureSend(mailBody, mailto, mailfrom, subject=subject)
-        mail_host.send(mailBody, mto=mailto, mfrom=mailfrom,
-                           subject=subject, msg_type='text/html')
+        from zope.sendmail.interfaces import IMailer
+        from zope.component import getUtility
+        mail_host = getUtility(IMailer, name='smtp')
+        messageText, mto, mfrom = _mungeHeaders(mailBody, mailto, mailfrom,
+                                subject, charset='utf-8', msg_type='text/html')
+        mail_host.send(fromaddr=mfrom, toaddrs=mto, message=messageText)
 
     security.declarePublic('getRenderTemplate')
     def getRenderTemplate(self, recompile=0):
