@@ -734,9 +734,9 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
     security.declarePublic('sendmail')
     def sendmail(self, mailfrom, mailto, mailBody, subject = None):
         """"""
-        from zope.sendmail.interfaces import IMailer
+        from zope.sendmail.interfaces import IMailDelivery
         from zope.component import getUtility
-        mail_host = getUtility(IMailer, name='smtp')
+        mail_host = getUtility(IMailDelivery, name='Mail')
         messageText, mto, mfrom = _mungeHeaders(mailBody, mailto, mailfrom,
                                 subject, charset='utf-8', msg_type='text/html')
         mail_host.send(fromaddr=mfrom, toaddrs=mto, message=messageText)
