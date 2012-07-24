@@ -1,8 +1,8 @@
 Changelog
 =========
 
-4.7-dev - (unreleased)
-----------------------
+4.7 - (2012-07-24)
+------------------
 * Upgrade Step: after the buildout is finished, run this on each squirrel
   $ ln -s `pwd`/bin/zopesendmail_ctl /etc/init.d/ 
   $ /sbin/chkconfig --add zopesendmail_ctl
