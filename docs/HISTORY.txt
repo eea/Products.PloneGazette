@@ -1,6 +1,9 @@
 Changelog
 =========
 
+4.8-dev - (unreleased)
+----------------------
+
 4.7 - (2012-07-24)
 ------------------
 * Upgrade Step: after the buildout is finished, run this on each squirrel
