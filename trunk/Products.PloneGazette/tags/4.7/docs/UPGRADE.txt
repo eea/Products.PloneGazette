@@ -1,0 +1,39 @@
+PloneGazette - Upgrade notes
+============================
+
+Upgrade from PG25 3.0 unreleased to PG25 2.5.1
+----------------------------------------------
+
+* PG25 is the renamed PG 3.0 release compatible with Plone 2.5
+* there are two portal_setup migration steps that need to be executed: 
+* the types tool import step
+* a special migration step called 
+  "PloneGazette migrate to content types internal version 3"
+
+You then need to go into your newsletter themes and manually edit the
+newly added fields (related to bouncing handling setup).
+
+
+Upgrade from PloneGazette 2.x to PloneGazette 3.0
+-------------------------------------------------
+
+o BACKUP YOUR SITE! Backup at least Data.fs (zope database)
+
+o I personally tried ZEXP export NewsletterTheme object from Zope 2.9/Plone 2.5 and import 
+  it to Zope2.10.4/Plone 3.0.3 and it worked. You can use other migration process, for example
+  copy old Data.fs to new instance etc. Migration of Plone is described on 
+  http://plone.org/upgrade 
+
+o Go to portal_quickinstaller, locate PloneGazette, check the checkbox and reinstall product.
+  All newsletter themes, newsletters and subscribers in your site will be migrated.
+  
+o After migration, all newsletters and newsletter themes may be in default workflow initial state
+  (private, by default). To be users able to browse newsletter archives and sign in to newsletters, 
+  you must publish all NewsletterTheme objects and Newsletters. Please check if your newsletters
+  are accessible for your anoynmous users.
+  
+o Please be sure Subscribers folder (that one where your subscribers are stored) is NOT accessible
+  by anonymous users. You can easily ensure it bu moving Subscribers folder to private state.
+  
+o Test your newsletters, test they are accessible for users, test sending of some newsletter to
+  your test address (using the Test tab).
