@@ -3,6 +3,12 @@ Changelog
 
 4.7-dev - (unreleased)
 ----------------------
+* Upgrade Step: after the buildout is finished, run this on each squirrel
+  $ ln -s `pwd`/bin/zopesendmail_ctl /etc/init.d/ 
+  $ /sbin/chkconfig --add zopesendmail_ctl
+  $ /sbin/chkconfig zopesendmail_ctl on
+  $ /sbin/service zopesendmail_ctl start
+  $ /sbin/service zopesendmail_ctl status
 * Bug fix: now using IMailer utility instead of MailHost tool to send emails
   [tiberich #5382]
 * Bug fix: use checkEmailAddress from ploneUtils instead of using customized  
