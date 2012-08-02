@@ -3,6 +3,8 @@ Changelog
 
 4.8-dev - (unreleased)
 ----------------------
+* Bug fix: Show only published newsletters when anonymous
+  [szabozo0 refs #5399]
 
 4.7 - (2012-07-24)
 ------------------
