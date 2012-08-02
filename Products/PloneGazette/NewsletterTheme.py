@@ -316,8 +316,15 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
         Return the "Newsletter" objects
         """
         mtool = getToolByName(self, 'portal_membership')
+        wf = getToolByName(self, 'portal_workflow')
+
         checkPermission = mtool.checkPermission
-        result = [ x for x in self.objectValues('Newsletter') if checkPermission('View', x)]
+
+        isLogged = not mtool.isAnonymousUser()
+        result = [ x for x in self.objectValues('Newsletter') if
+                            checkPermission('View', x) and
+                            (isLogged or
+                            wf.getInfoFor(x, 'review_state') == 'published')]
         return result
 
     security.declarePublic('createSubscriberObject')
