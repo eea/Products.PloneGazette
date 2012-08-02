@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<tal:comment tal:replace="nothing">
+$Id$
+</tal:comment>
+<html metal:use-macro="here/main_template/macros/master">
+    <body>
+
+        <div metal:fill-slot="main"
+            i18n:domain="plonegazette">
+
+            <h1 i18n:translate="heading_newsletter_theme_google">Newsletter theme Google Analytics</h1>
+            <p i18n:translate="heading_newsletter_theme_google_desc">Also related to Google Analytics setting, 
+            on each Newsletter there is <strong>"Campaign Source"</strong> to be set. As default <strong>"Campaign Source"</strong> 
+            will contain the newsletter id. </p>
+
+            <form name="google_form"
+                action=""
+                method="post"
+                enctype="multipart/form-data"
+                tal:define="
+                member context/@@plone_portal_state/member;
+                visible_ids visible_ids|python: member.getProperty('visible_ids', None)"
+                tal:attributes="action current_page_url|string:${here/absolute_url}/${template/getId}">
+
+                <fieldset>
+
+                    <legend i18n:translate="legend_newsletter_theme_google">Newsletter Theme settings for Google Analytics</legend>
+
+                    <input type="hidden"
+                    name="id"
+                    tal:condition="not:visible_ids"
+                    tal:attributes="value python:request.get('id', here.getId())" />
+
+                    <!-- Campaign Source Field -->
+                    <div class="field"
+                        tal:define="utm_source request/utm_source | here/utm_source">
+
+                        <label for="utm_source" i18n:translate="label_utm_source">Campaign Source</label>
+                        <div i18n:translate="help_utm_source"
+                            class="formHelp">
+                            Referrer: newsletter4, google, citysearch, etc.
+                        </div>
+
+                        <input type="text"
+                        name="utm_source"
+                        id="utm_source"
+                        value=""
+                        size="40"
+                        tal:attributes="value utm_source;
+                        " />
+                    </div>
+
+                    <!-- Campaign Medium Field -->
+                    <div class="field"
+                        tal:define="utm_medium request/utm_medium | here/utm_medium">
+
+                        <label for="utm_medium" i18n:translate="label_utm_medium">Campaign Medium</label>
+                        <div i18n:translate="help_utm_medium"
+                            class="formHelp">
+                            The marketing medium: email, cpc, banner etc.
+                        </div>
+
+                        <input type="text"
+                        name="utm_medium"
+                        id="utm_medium"
+                        value=""
+                        size="40"
+                        tal:attributes="value utm_medium;
+                        " />
+                    </div>
+
+                    <!-- Submitting machinery -->
+
+                    <div class="formControls"
+                        i18n:domain="plone"
+                        tal:define="process_creation request/process_creation|nothing;">
+                        <input class="context"
+                        type="submit"
+                        name="form.button.Save"
+                        value="Save"
+                        i18n:attributes="value"
+                        />
+
+                        <input class="standalone"
+                        type="submit"
+                        name="form.button.Cancel"
+                        value="Cancel"
+                        i18n:attributes="value"
+                        />
+                    </div>
+
+                    <input type="hidden" name="form.submitted" value="1" />
+
+                </fieldset>
+            </form>
+
+        </div>
+
+    </body>
+</html>
