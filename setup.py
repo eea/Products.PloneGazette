@@ -25,6 +25,7 @@ setup(name='Products.PloneGazette',
           # -*- Extra requirements: -*-
           "Products.TALESField",
           "collective.monkeypatcher",
+          "eea.versions"
       ],
       entry_points="""
       # -*- Entry points: -*-
