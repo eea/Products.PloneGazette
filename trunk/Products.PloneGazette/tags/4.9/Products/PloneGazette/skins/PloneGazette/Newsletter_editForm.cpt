@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<tal:comment tal:replace="nothing">
+$Id$
+</tal:comment>
+<html metal:use-macro="here/main_template/macros/master"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
+      lang="en-US">
+
+<body>
+
+<div metal:fill-slot="main"
+     i18n:domain="plonegazette"
+     tal:define="errors options/state/getErrors;
+                 member context/@@plone_portal_state/member;
+                 editor python:member.getProperty('wysiwyg_editor', 'None');
+                 wysiwyg python:test(editor and editor != 'None', editor, 'None')">
+
+ <h1 i18n:translate="heading_newsletter_edit">Edit newsletter</h1>
+ 
+ <tal:related condition="here/hasExternalRelation">
+    <div class="portalMessage" tal:define="rel_ob here/getRelatedObject; rel_exist here/checkRelated">
+	This newsletter was generated based on:
+        <tal:exist condition="rel_exist">
+            <a tal:attributes="href rel_ob/absolute_url; title rel_ob/Title" i18n:translate="see_more">see more</a>
+	</tal:exist>
+        <tal:exist condition="not:rel_exist">
+            ( <span style="color:red" i18n:translate="notification_related_deleted">the related object was deleted</span> )
+        </tal:exist>
+    	<br />The fields bellow will not be taken under consideration on generating newsletter body.
+    </div>
+ </tal:related>
+
+ <form name="edit_form"
+       action=""
+       method="post"
+       enctype="multipart/form-data"
+       tal:define="visible_ids visible_ids|python:member.getProperty('visible_ids', None)"
+       tal:attributes="action current_page_url|string:${here/absolute_url}/${template/getId}">
+
+  <fieldset>
+
+  <legend i18n:translate="legend_newsletter_edit">Newsletter Details</legend>
+
+  <!-- Id Field -->
+
+  <div class="field"
+       i18n:domain="plone"
+       tal:define="error errors/id | nothing;
+                   id python:request.get('id', test(here.show_id(),here.getId(),''));"
+       tal:condition="visible_ids"
+       tal:attributes="class python:test(error, 'field error', 'field')">
+
+    <label for="id" i18n:translate="label_short_name" i18n:domain="plone">Short Name</label>
+
+    <div i18n:translate="help_shortname" i18n:domain="plone"
+         class="formHelp">
+       Short name is part of the item's web address. For accessibility reasons, do not use spaces, upper case, underscores, or special characters
+    </div>
+
+    <div tal:content="structure error">Validation error output</div>
+    <input type="text"
+           name="id"
+           id="id"
+           size="40"
+           value=""
+           tal:attributes="value id; " />
+
+  </div>
+
+  <input type="hidden"
+         name="id"
+         tal:condition="not:visible_ids"
+         tal:attributes="value python:request.get('id', here.getId())"/>
+
+
+  <!-- Title Field -->
+
+  <div class="field"
+       tal:define="error errors/title|nothing;
+                   Title request/title | here/Title;"
+       tal:attributes="class python:test(error, 'field error', 'field')">
+
+    <label i18n:translate="label_newsletter_title">Title</label>
+
+    <span class="fieldRequired" title="Required"
+          i18n:attributes="title"
+          i18n:translate="label_required">(Required)</span>
+
+    <div i18n:translate="help_newsletter_title"
+         class="formHelp">
+     The title of a newsletter will show as the subject of the mail client of the recipients.
+    </div>
+
+    <div tal:content="structure error">Validation error output</div>
+    <input type="text"
+           name="title"
+           id="title"
+           value="#"
+           size="40"
+           tal:attributes="value Title;"/>
+  </div>
+
+  <!-- Description Field -->
+
+  <div class="field"
+       tal:define="description request/description | here/Description">
+
+    <label for="description" i18n:translate="label_newsletter_description">Description</label>
+
+    <div i18n:translate="help_newsletter_description"
+         class="formHelp">
+      This text will not be included in the newsletter sent to your subscribers.
+      It will show in the search results as a short summary of your newsletter.
+      Please enter plain text (<b>not</b> HTML).
+    </div>
+
+    <textarea cols="80"
+              rows="5"
+              name="description"
+              id="description"
+              tal:content="description"
+              >
+     Description
+    </textarea>
+   </div>
+
+  <!-- Content Field -->
+
+  <div class="field"
+       i18n:domain="plone"
+       tal:define="text python:request.get('text', getattr(here, 'text', ''));
+                   cooked_text python:request.get('text', getattr(here, 'cooked_text' , ''))">
+
+    <label for="text" i18n:translate="label_body_text">Newsletter content</label>
+
+    <tal:editor tal:define="inputname  string:text;
+                     formname   string:edit_form;
+                     inputvalue text;
+                     cooked_inputvalue cooked_text;
+                     ">
+
+    <div metal:use-macro="here/wysiwyg_support/macros/wysiwygEditorBox">
+     The WYSIWYG code
+    </div>
+
+    </tal:editor>
+    <tal:bbb define="text_format text_format|string:html">
+      <div metal:use-macro="here/wysiwyg_support/macros/textFormatSelector">
+        Format box, if needed
+      </div>
+    </tal:bbb>
+
+  </div>
+
+   <tal:block tal:condition="nothing">
+      <!-- Date emitted -->
+      <tal:comment tal:replace="nothing">
+      The dateEmitted field will be complete at the time of sending. 
+      Usually newsletters are prepared several days in advance of sending.
+      We don't want dateEmitted filled automatically at the time the Newsletter is 
+      created, because dateEmitted is also the cutoff date for the catalog searches in nested 
+      newsletter topics and items created in the intervening period before
+      sending will be missed from the newsletter.
+      (This long note to prevent someone re-adding a "here.zopeTime()" to the 
+      default parameter the first test() below))
+      </tal:comment>
+
+      <div class="field"
+           tal:define="error errors/dateEmitted | nothing;">
+
+        <label for="dateEmitted" i18n:translate="label_dateEmitted">Date emitted</label>
+        <div i18n:translate="help_dateEmitted"
+             class="formHelp">
+          The date this newsletter was sent. Can be changed manually. Normally filled automatically while sending.
+        </div>
+
+
+       <div tal:define="inputname  string:dateEmitted;
+                        formname   string:edit_form;
+                        formvalue  request/dateEmitted | nothing;
+                        inputvalue python:test(here.dateEmitted, here.dateEmitted, None);
+                        inputvalue python:test(formvalue,formvalue,inputvalue);
+                        "
+            tal:attributes="class python:test(error, 'field error', 'field')">
+
+        <div tal:content="error">Validation error output</div>
+
+        <div metal:use-macro="here/calendar_macros/macros/calendarDatePickerBox|here/calendar_slot/macros/calendarDatePickerBox">
+           a calendar, hopefully
+        </div>
+       </div>
+
+      </div>
+  </tal:block>
+
+  <fieldset><legend i18n:translate="google_analytics">Google Analytics</legend>
+
+  <!-- Campaign Campaign Field -->
+  <div class="field"
+       tal:define="utm_campaign_tmp python:test(getattr(here, 'utm_campaign'), here.utm_campaign, '');
+    		   utm_campaign request/utm_campaign | utm_campaign_tmp;">
+
+    <label i18n:translate="label_newsletter_campaign_campaign">Campaign Campaign</label>
+
+    <div i18n:translate="help_newsletter_campaign_campaign"
+         class="formHelp">
+     The name of the campaign.
+    </div>
+
+    <input type="text"
+           name="utm_campaign"
+           id="utm_campaign"
+           value="#"
+           size="40"
+           tal:attributes="value utm_campaign;"/>
+  </div>
+   
+  <!-- Campaign Term Field -->
+  <div class="field"
+       tal:define="utm_term_tmp python:test(getattr(here, 'utm_term'), here.utm_term, '');
+    		   utm_term request/utm_term | utm_term_tmp;">
+
+    <label i18n:translate="label_newsletter_campaign_term">Campaign Term</label>
+
+    <div i18n:translate="help_newsletter_campaign_term"
+         class="formHelp">
+     The search term purchased (if you.re buying keywords).
+    </div>
+
+    <input type="text"
+           name="utm_term"
+           id="utm_term"
+           value="#"
+           size="40"
+           tal:attributes="value utm_term;"/>
+  </div>
+  
+  <!-- Campaign Content Field -->
+  <div class="field"
+       tal:define="utm_content_tmp python:test(getattr(here, 'utm_content'), here.utm_content, '');
+    		   utm_content request/utm_content | utm_content_tmp;">
+
+    <label i18n:translate="label_newsletter_campaign_content">Campaign Content</label>
+
+    <div i18n:translate="help_newsletter_campaign_content"
+         class="formHelp">
+     The version of the ad (used for A/B testing). You can identify two versions of the same ad using this variable.
+    </div>
+
+    <input type="text"
+           name="utm_content"
+           id="utm_content"
+           value="#"
+           size="40"
+           tal:attributes="value utm_content;"/>
+  </div>
+  
+  </fieldset>
+
+  <!-- Submitting machinery -->
+
+  <div class="formControls"
+       i18n:domain="plone"
+       tal:define="process_creation request/process_creation|nothing">
+
+
+    <input class="context"
+           type="submit"
+           name="form.button.Save"
+           value="Save"
+           i18n:domain="plone"
+           i18n:attributes="value"
+           />
+
+    <input class="standalone"
+           type="submit"
+           name="form.button.Cancel"
+           value="Cancel"
+           i18n:domain="plone"
+           i18n:attributes="value"
+           />
+
+  </div>
+
+  <input type="hidden" name="form.submitted" value="1" />
+
+ </fieldset>
+
+ </form>
+
+</div>
+
+</body>
+</html>
+
