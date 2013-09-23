@@ -3,3 +3,5 @@ global-exclude *~
 global-exclude *.un~
 
 global-include *mo
+
+global-include *.mo
