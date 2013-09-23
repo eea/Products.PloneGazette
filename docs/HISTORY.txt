@@ -1,6 +1,9 @@
 Changelog
 =========
 
+5.0-dev - (unreleased)
+----------------------
+
 4.9 - (2013-09-23)
 ------------------
 * Feature: Added IVersionEnhanced interface to Newsletter and NewsletterTheme
