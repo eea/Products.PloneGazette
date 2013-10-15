@@ -71,6 +71,11 @@ $Id$
              </tal:block>
             </tal:block>
 
+            <label class="hiddenStructure" for="email_verify" i18n:translate="">
+              Human verification: leave empty
+            </label>
+            <input class="hiddenStructure" type="text" name="email_verify" />
+
             <input class="context"
                   type="submit"
                   name="submit"

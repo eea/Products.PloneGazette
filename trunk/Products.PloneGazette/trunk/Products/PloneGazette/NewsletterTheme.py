@@ -390,16 +390,24 @@ class NewsletterTheme(SkinnedFolder.SkinnedFolder, DefaultDublinCoreImpl, PNLCon
         errors = {}
         data = {}
         charset = self.ploneCharset()
+
         if REQUEST.form.has_key('email'):
             # Form submitted
             emailaddress = REQUEST.form.get('email', '').strip()
             data['email'] = emailaddress
+
+            email_verify = REQUEST.form.get('email_verify', 'not_submitted')
 
             format = REQUEST.form.get('format', self.default_format)
             data['format'] = format
 
             if not self.checkMailAddress(emailaddress):
                 errors['email'] = _('This is not a valid mail address')
+                return data, errors
+
+             # This is an automated request, probably a bot, we fake a succesful registration"
+            if email_verify:
+                data['success'] = 1
                 return data, errors
 
             if self.alreadySubscriber(emailaddress):

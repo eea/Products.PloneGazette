@@ -25,6 +25,8 @@ if nlcentral is None:
     REQUEST.RESPONSE.redirect(context.portal_url())
     return
 
+email_verify = REQUEST.get('email_verify', '')
+
 # Case of wrong parameters
 if nlcentral.portal_type != 'NewsletterTheme':
     REQUEST.RESPONSE.redirect(context.portal_url())
@@ -37,7 +39,9 @@ if format is None:
 actions = context.portal_actions.listFilteredActionsFor(object=nlcentral)
 url = [action['url'] for action in actions['object']
        if action['id'] == 'subscribe'][0]
-query = '?email=%s&format=%s' % (url_quote(email), format)
+query = '?email=%s&format=%s&email_verify=%s' % (url_quote(email),
+                                                 format,
+                                                 email_verify)
 
 REQUEST.RESPONSE.redirect(url + query)
 return

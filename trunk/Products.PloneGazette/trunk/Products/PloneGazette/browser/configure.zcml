@@ -21,7 +21,15 @@
 		class=".bounced.ManageBouncedSubscribers" >
 		Administration page to manage the bouncing subscribers
 	</browser:page>
-
+	
+	<browser:page
+		for='..interfaces.INewsletterTheme'
+		name="delete_inactive"
+		permission="pg.ChangePGTheme"
+		class=".utils.ManageInactiveSubscribers" >
+		Administration page to delete inactive subscribers
+	</browser:page>
+	
 	<browser:page
 		for='..interfaces.INewsletterTheme'
 		name="manage_add_bounced_subscribers.html"
