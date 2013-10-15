@@ -1,0 +1,18 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:gs="http://namespaces.zope.org/genericsetup"
+  i18n_domain="plonegazette">
+
+  <gs:upgradeSteps
+    source="*"
+    destination="4.9"
+    profile="Products.PloneGazette:default">
+
+    <gs:upgradeDepends
+      title="Import the typeinfo registry"
+      import_steps="typeinfo"
+      />
+
+  </gs:upgradeSteps>
+
+</configure>
