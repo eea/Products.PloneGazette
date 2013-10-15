@@ -36,5 +36,6 @@
       <implements interface="eea.versions.interfaces.IVersionEnhanced" />
     </class>
 	<include package=".browser" />
+    <include package=".upgrades" />
 
 </configure>
