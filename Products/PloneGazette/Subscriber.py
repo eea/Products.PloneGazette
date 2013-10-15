@@ -13,6 +13,7 @@ import string
 from App.class_init import InitializeClass
 from AccessControl import Permissions, getSecurityManager, ClassSecurityInfo, Unauthorized
 from AccessControl.SecurityManagement import newSecurityManager
+from DateTime import DateTime
 
 # CMF/Plone imports
 from Products.CMFCore.permissions import View, ManageProperties, ListFolderContents, ModifyPortalContent
@@ -112,6 +113,7 @@ class Subscriber(PortalContent, DefaultDublinCoreImpl, PNLContentBase):
         self.email = email
         self.format = 'HTML'
         self.active = False
+        self.creation_date = DateTime()
 
         # version 3 - add the bounces attribute
         self.bounces = []

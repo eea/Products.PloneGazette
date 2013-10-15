@@ -3,7 +3,9 @@ Changelog
 
 5.0-dev - (unreleased)
 ----------------------
-
+* Feature: Added subscription honeypot; Added view to delete inactive subscribers
+  that are older than 7 days
+  [tiberich #17013]
 4.9 - (2013-09-23)
 ------------------
 * Feature: Added IVersionEnhanced interface to Newsletter and NewsletterTheme
