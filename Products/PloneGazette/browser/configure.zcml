@@ -25,7 +25,7 @@
 	<browser:page
 		for='..interfaces.INewsletterTheme'
 		name="delete_inactive"
-		permission="pg.ChangePGTheme"
+		permission="pg.CleanupSubscribers"
 		class=".utils.ManageInactiveSubscribers" >
 		Administration page to delete inactive subscribers
 	</browser:page>

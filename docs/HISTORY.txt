@@ -3,6 +3,8 @@ Changelog
 
 5.0-dev - (unreleased)
 ----------------------
+* Feature: Added new permission for subscribers cleanup
+  [tiberich #17013]
 * Feature: Added Cleanup subscribers action to NewsletterTheme via upgrade step
   [tiberich #17013]
 * Feature: Added subscription honeypot; Added view to delete inactive subscribers

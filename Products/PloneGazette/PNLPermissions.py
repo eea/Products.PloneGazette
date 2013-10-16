@@ -17,6 +17,7 @@ ChangeNewsletter = 'PNL Change Newsletter'
 AddSubscriber = 'PNL Add Subscriber'
 ChangeSubscriber = 'PNL Change Subscriber'
 ExternalService = "PNL External Service"
+CleanupSubscribers = "PloneGazette: Cleanup Subscribers"
 
 # Default roles for those permissions
 setDefaultRoles(AddNewsletterTheme, ('Manager',))
@@ -26,3 +27,4 @@ setDefaultRoles(ChangeNewsletter, ('Manager', 'Owner'))
 setDefaultRoles(AddSubscriber, ('Anonymous', 'Manager', 'Owner', 'Member'))
 setDefaultRoles(ChangeSubscriber, ('Anonymous', 'Manager', 'Owner'))
 setDefaultRoles(ExternalService, ('Manager',))
+setDefaultRoles(CleanupSubscribers, ('Manager', 'packrole'))
