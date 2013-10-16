@@ -13,6 +13,11 @@
       import_steps="typeinfo"
       />
 
+    <gs:upgradeDepends
+      title="Import rolemap registry"
+      import_steps="rolemap"
+      />
+
   </gs:upgradeSteps>
 
 </configure>

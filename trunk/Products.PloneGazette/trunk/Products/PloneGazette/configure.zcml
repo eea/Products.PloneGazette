@@ -10,6 +10,7 @@
 
 	<permission id="pg.ChangePGTheme" title="PNL Change Newsletter Theme" />
 	<permission id="pg.ExternalService" title="PNL External Service" />
+  <permission id="pg.CleanupSubscribers" title="PloneGazette: Cleanup Subscribers" />
 
 	<genericsetup:registerProfile
 		name="default"
@@ -35,7 +36,8 @@
     <class class="Products.PloneGazette.NewsletterTheme.NewsletterTheme">
       <implements interface="eea.versions.interfaces.IVersionEnhanced" />
     </class>
-	<include package=".browser" />
-    <include package=".upgrades" />
+	  
+  <include package=".browser" />
+  <include package=".upgrades" />
 
 </configure>
