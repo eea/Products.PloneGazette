@@ -10,6 +10,8 @@ Changelog
 * Feature: Added subscription honeypot; Added view to delete inactive subscribers
   that are older than 7 days
   [tiberich #17013]
+* Upgrade step: remove the inactive subscribers
+  [ghicaale refs #17013]
 
 4.9 - (2013-09-23)
 ------------------
@@ -23,7 +25,7 @@ Changelog
 
 4.7 - (2012-07-24)
 ------------------
-* Upgrade Step: after the buildout is finished, run this on each squirrel
+* Upgrade step: after the buildout is finished, run this on each squirrel
   $ ln -s `pwd`/bin/zopesendmail_ctl /etc/init.d/
   $ /sbin/chkconfig --add zopesendmail_ctl
   $ /sbin/chkconfig zopesendmail_ctl on
