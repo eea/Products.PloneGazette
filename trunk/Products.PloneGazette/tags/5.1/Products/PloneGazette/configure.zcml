@@ -1,0 +1,43 @@
+<configure
+	xmlns="http://namespaces.zope.org/zope"
+	xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+	xmlns:five="http://namespaces.zope.org/five"
+	xmlns:browser="http://namespaces.zope.org/browser"
+	xmlns:cmf="http://namespaces.zope.org/cmf"
+	i18n_domain="plonegazette">
+
+    <cmf:registerDirectory name="PloneGazette"/>
+
+	<permission id="pg.ChangePGTheme" title="PNL Change Newsletter Theme" />
+	<permission id="pg.ExternalService" title="PNL External Service" />
+  <permission id="pg.CleanupSubscribers" title="PloneGazette: Cleanup Subscribers" />
+
+	<genericsetup:registerProfile
+		name="default"
+		title="PloneGazette"
+		directory="profiles/default"
+		description=""
+		provides="Products.GenericSetup.interfaces.EXTENSION"
+		/>
+
+    <class class="Products.PloneGazette.PNLBase.PNLContentBase">
+      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    </class>
+    <class class="Products.PloneGazette.NewsletterReference.NewsletterReference">
+      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    </class>
+    <class class="Products.PloneGazette.NewsletterRichReference.NewsletterRichReference">
+      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    </class>
+    
+    <class class="Products.PloneGazette.Newsletter.Newsletter">
+      <implements interface="eea.versions.interfaces.IVersionEnhanced" />
+    </class>
+    <class class="Products.PloneGazette.NewsletterTheme.NewsletterTheme">
+      <implements interface="eea.versions.interfaces.IVersionEnhanced" />
+    </class>
+	  
+  <include package=".browser" />
+  <include package=".upgrades" />
+
+</configure>

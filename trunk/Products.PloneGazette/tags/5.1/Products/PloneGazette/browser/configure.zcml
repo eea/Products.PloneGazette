@@ -1,0 +1,49 @@
+<configure
+	xmlns="http://namespaces.zope.org/zope"
+	xmlns:browser="http://namespaces.zope.org/browser"
+	i18n_domain="plonegazette">
+
+	<browser:page
+		for="..interfaces.INewsletterBTree"
+		name="newsletterbtree_view"
+		template="templates/newsletterbtree_view.pt"
+		class=".newsletterbtree.NewsletterBTreeView"
+		allowed_interface=".interfaces.INewsletterBTreeView"
+		permission="zope2.View" >
+		View for Subscribers folder
+	</browser:page>
+
+	<browser:page
+		for='..interfaces.INewsletterTheme'
+		name="bounced_subscribers"
+		template="templates/configure_bouncers.pt"
+		permission="pg.ChangePGTheme"
+		class=".bounced.ManageBouncedSubscribers" >
+		Administration page to manage the bouncing subscribers
+	</browser:page>
+	
+	<browser:page
+		for='..interfaces.INewsletterTheme'
+		name="delete_inactive"
+		permission="pg.CleanupSubscribers"
+		class=".utils.ManageInactiveSubscribers" >
+		Administration page to delete inactive subscribers
+	</browser:page>
+	
+	<browser:page
+		for='..interfaces.INewsletterTheme'
+		name="manage_add_bounced_subscribers.html"
+		permission="pg.ExternalService"
+		class=".bounced.AddBouncedSubscribers" >
+		Called by the External Service to add bounced subscribers
+	</browser:page>
+
+	<browser:page
+		for='..interfaces.INewsletterTheme'
+		name="get_service_parameters"
+		permission="pg.ExternalService"
+		class=".bounced.GetBouncedServiceParameters" >
+		Called by the External Service to configure itself at startup
+	</browser:page>
+
+</configure>
