@@ -1,8 +1,8 @@
 Changelog
 =========
 
-5.0-dev - (unreleased)
-----------------------
+5.0 - (2013-10-22)
+------------------
 * Feature: Added new permission for subscribers cleanup
   [tiberich #17013]
 * Feature: Added Cleanup subscribers action to NewsletterTheme via upgrade step
