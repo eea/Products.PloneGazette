@@ -1,8 +1,8 @@
 Changelog
 =========
 
-5.1-dev - (unreleased)
-----------------------
+5.1 - (2013-10-22)
+------------------
 * Feature: Added logging info regarding deleted subscribers
   [tiberich #17013]
 * Feature: Use transaction.commit after each hundred inactive subscribers deleted
