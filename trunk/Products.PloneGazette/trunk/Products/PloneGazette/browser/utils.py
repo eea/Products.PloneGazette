@@ -29,6 +29,7 @@ class ManageInactiveSubscribers(BrowserView):
                 parent = aq_parent(subscriber)
                 parent.manage_delObjects([subscriber.id])
                 if (counter % 100) == 0:
+                    logger.info("Deleted %s subscribers" % counter)
                     transaction.commit()
 
         msg = "Deleted %s inactive email subscribers" % counter
