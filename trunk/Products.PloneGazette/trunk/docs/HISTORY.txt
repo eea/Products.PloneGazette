@@ -3,6 +3,8 @@ Changelog
 
 5.1-dev - (unreleased)
 ----------------------
+* Feature: Use transaction.commit after each hundred inactive subscribers deleted
+  [tiberich #17013]
 
 5.0 - (2013-10-22)
 ------------------

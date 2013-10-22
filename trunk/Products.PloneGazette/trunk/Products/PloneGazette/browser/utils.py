@@ -3,6 +3,7 @@ from Acquisition import aq_parent
 from DateTime import DateTime
 from Products.Five import BrowserView
 import logging
+import transaction
 
 logger = logging.getLogger('PloneGazette')
 
@@ -27,6 +28,8 @@ class ManageInactiveSubscribers(BrowserView):
                 counter += 1
                 parent = aq_parent(subscriber)
                 parent.manage_delObjects([subscriber.id])
+                if (counter % 100) == 0:
+                    transaction.commit()
 
         msg = "Deleted %s inactive email subscribers" % counter
         logger.info(msg)
