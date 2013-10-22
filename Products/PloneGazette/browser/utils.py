@@ -12,6 +12,7 @@ class ManageInactiveSubscribers(BrowserView):
     """Page to delete Inactive Subscribers older than 7 days"""
 
     def __call__(self,):
+        logger.info('Start subscribers cleanup')
         context = aq_inner(self.context)
         days = self.request.form.get('days', 7)
         days = int(days) * 24 * 3600
@@ -29,7 +30,7 @@ class ManageInactiveSubscribers(BrowserView):
                 parent = aq_parent(subscriber)
                 parent.manage_delObjects([subscriber.id])
                 if (counter % 100) == 0:
-                    logger.info("Deleted %s subscribers" % counter)
+                    logger.info("... deleted %s subscribers" % counter)
                     transaction.commit()
 
         msg = "Deleted %s inactive email subscribers" % counter
