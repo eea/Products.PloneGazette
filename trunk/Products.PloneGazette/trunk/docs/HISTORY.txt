@@ -3,6 +3,8 @@ Changelog
 
 5.2-dev - (unreleased)
 ----------------------
+* Bug fix: Fixed unsubscribe view asking for user credentials
+  [tiberich]
 
 5.1 - (2013-10-22)
 ------------------
