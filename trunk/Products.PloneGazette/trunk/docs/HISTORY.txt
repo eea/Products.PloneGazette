@@ -1,6 +1,9 @@
 Changelog
 =========
 
+5.3-dev - (unreleased)
+----------------------
+
 5.2 - (2013-10-25)
 ------------------
 * Bug fix: Fixed unsubscribe view asking for user credentials
