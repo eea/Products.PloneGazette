@@ -1,4 +1,4 @@
-# 
+#
 # $Id$
 #
 
@@ -146,7 +146,7 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
 
     # Init method
     security.declarePrivate('__init__')
-    def __init__(self, id, title='', description='', text_format='', text='', 
+    def __init__(self, id, title='', description='', text_format='', text='',
                  dateEmitted=None, relatedItem=None, utm_campaign='', utm_term='', utm_content=''):
         """__init__(self, id, title='')"""
 
@@ -510,8 +510,8 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
         mailto   = theme.testEmail
         mailfrom = theme.authorEmail
         subject  = "Newsletter delivery started"
-        
-        body = """The following newsletter has started the message delivery process: 
+
+        body = """The following newsletter has started the message delivery process:
             %s
             %s
             """ % (self.Title(), self.absolute_url())
@@ -536,8 +536,8 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
         mailto   = theme.testEmail
         mailfrom = theme.authorEmail
         subject  = "Newsletter delivery completed"
-        
-        body = """The following newsletter has finished the message delivery process: 
+
+        body = """The following newsletter has finished the message delivery process:
             %s
             %s
             """ % (self.Title(), self.absolute_url())
@@ -583,7 +583,7 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
         else:
             titleForMessage = safe_unicode(self.title)
 
-        titleForMessage = Header(titleForMessage, header_name='Subject', 
+        titleForMessage = Header(titleForMessage, header_name='Subject',
                                  charset=charset)
         portal_url = getToolByName(self, 'portal_url')()
 
@@ -655,7 +655,7 @@ class Newsletter(SkinnedFolder, OrderedContainer, DefaultDublinCoreImpl, PNLCont
         """Sends that newsletter to all subscribers and extra recipients"""
         self.sent_status = True
         transaction.commit()
-        
+
         theme = self.getTheme()
         set_recipients_mailingInfos = set(theme.mailingInfos())
         # we are sending to all recipients. Render dynamic content and store it persistently
