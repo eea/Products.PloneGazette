@@ -3,6 +3,9 @@ Changelog
 
 5.3-dev - (unreleased)
 ----------------------
+* Bug fix: fixed the activate subscribtion page when the requested subscriber
+  does not exist into the databse.
+  [ghicaale refs #20153]
 
 5.2 - (2013-10-25)
 ------------------
