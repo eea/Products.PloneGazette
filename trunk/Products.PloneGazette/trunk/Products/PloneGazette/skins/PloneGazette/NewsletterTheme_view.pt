@@ -8,16 +8,17 @@
                  newsletters python:sequence.sort(newsletters, (('dateEmitted', 'cmp', 'desc'),));">
 
   <h1 class="documentFirstHeading" tal:content="here/title">Title</h1>
+
   <br />
   <tal:block tal:condition="active">
-      <tal:block tal:condition="subscriber">
+      <tal:block tal:condition="nocall:subscriber">
         <tal:block tal:define="email subscriber/Title;
                                format request/format | here/default_format;
                                activate python:subscriber.edit(format=format, active=1, email=email)">
           <div class="portalMessage"><strong><span i18n:translate="text_subscription_activated" tal:omit-tag="">Your newsletter subscription is activated. You will receive <span tal:replace="format" i18n:name="format" /> newsletters.</span></strong></div>
         </tal:block>
       </tal:block>
-      <tal:block tal:condition="not:subscriber">
+      <tal:block tal:condition="not:nocall:subscriber">
           <div class="portalMessage"><strong><span i18n:translate="text_subscription_missing" tal:omit-tag="">No subscriber found with the ID: (<tal:block content="active" />)</span></strong></div>
       </tal:block>
   </tal:block>
