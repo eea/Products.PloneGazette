@@ -3,8 +3,10 @@ Changelog
 
 5.3-dev - (unreleased)
 ----------------------
+* Bug fix: fixed the subscription page to treat all subscription scenarios.
+  [ghicaale refs #20153]
 * Bug fix: fixed the activate subscribtion page when the requested subscriber
-  does not exist into the databse.
+  does not exist into the database.
   [ghicaale refs #20153]
 
 5.2 - (2013-10-25)
