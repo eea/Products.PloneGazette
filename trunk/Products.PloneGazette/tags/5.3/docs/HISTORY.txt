@@ -1,0 +1,262 @@
+Changelog
+=========
+
+5.3 - (2014-06-30)
+------------------
+* Bug fix: fixed the subscription page to treat all subscription scenarios.
+  [ghicaale refs #20153]
+* Bug fix: fixed the activate subscribtion page when the requested subscriber
+  does not exist into the database.
+  [ghicaale refs #20153]
+
+5.2 - (2013-10-25)
+------------------
+* Bug fix: Fixed unsubscribe view asking for user credentials
+  [tiberich]
+
+5.1 - (2013-10-22)
+------------------
+* Feature: Added logging info regarding deleted subscribers
+  [tiberich #17013]
+* Feature: Use transaction.commit after each hundred inactive subscribers deleted
+  [tiberich #17013]
+
+5.0 - (2013-10-22)
+------------------
+* Feature: Added new permission for subscribers cleanup
+  [tiberich #17013]
+* Feature: Added Cleanup subscribers action to NewsletterTheme via upgrade step
+  [tiberich #17013]
+* Feature: Added subscription honeypot; Added view to delete inactive subscribers
+  that are older than 7 days
+  [tiberich #17013]
+* Upgrade step: remove the inactive subscribers
+  [ghicaale refs #17013]
+
+4.9 - (2013-09-23)
+------------------
+* Feature: Added IVersionEnhanced interface to Newsletter and NewsletterTheme
+  [tiberich #16776]
+
+4.8 - (2012-08-02)
+------------------
+* Bug fix: Show only published newsletters when anonymous
+  [szabozo0 refs #5399]
+
+4.7 - (2012-07-24)
+------------------
+* Upgrade step: after the buildout is finished, run this on each squirrel
+  $ ln -s `pwd`/bin/zopesendmail_ctl /etc/init.d/
+  $ /sbin/chkconfig --add zopesendmail_ctl
+  $ /sbin/chkconfig zopesendmail_ctl on
+  $ /sbin/service zopesendmail_ctl start
+  $ /sbin/service zopesendmail_ctl status
+* Bug fix: now using IMailer utility instead of MailHost tool to send emails
+  [tiberich #5382]
+* Bug fix: use checkEmailAddress from ploneUtils instead of using customized
+  checkMailAddress when checking if email address is valid
+  [ichimdav #5353]
+
+4.6 - (2012-06-20)
+------------------
+* Bug fix: Fixed discussion errors on newsletters
+  [szabozo0 refs #5282]
+* Upgrade step: in @@types-controlpanel make sure comments are not allowed for Newsletters
+  [szabozo0 refs #5282]
+
+4.5 - (2012-06-12)
+------------------
+* Bug fix: fixed markup of HISTORY.txt file
+  [ciobabog refs #5231]
+* Bug fix: fixed register_newsletter.py script not to raise
+  error when is called with wrong parameters
+  [ghicaale fixes #5220]
+
+4.4 - (2012-04-26)
+------------------
+* Bug fix: fixed unsubscribe yielding security error
+  [tiberich #5031]
+
+4.3 - (2012-02-06)
+------------------
+* Bug fix: fixed sending newsletters when subject had non-ascii characters and exceeded 60 chars
+  [tiberich #4923]
+
+4.2 - (2011-11-28)
+------------------
+* Bug fix: Fixed send emails
+  [ghicaale #4792]
+
+4.1 - (2011-11-18)
+------------------
+* Rerelease broken egg
+  [tiberich]
+
+4.0 - (2011-11-18)
+------------------
+* Bugfix: Fixed IE JS errors, fixed code that uses jQuery to avoid conflicts
+  with other JS frameworks
+  [szabozo0 #4542]
+* Bugfix: Changed to subscription to newsletter to use SpecialUsers.system user
+  [szabozo #4510]
+
+2.6.0-dev - (unreleased)
+-------------------------
+* Changes: Fixed Deprecation messages
+  [szabozo0 #4423]
+* Feature: plone4 compatibility
+  [tiberich #4315]
+
+2.5.14 - (2011-01-05)
+---------------------
+* Bug fix: fixed base URI retrieving for Internet Explorer
+  [tiberich #4001]
+
+2.5.13 - (2010-12-22)
+---------------------
+* Bug fix: fixed logging when removing subscriber
+  [tiberich #4015]
+
+2.5.12 - (2010-12-10)
+---------------------
+* Bug fix: add three missing semicolons in newsletter_send.js
+  [tiberich #3948]
+
+2.5.11 - (2010-12-08)
+---------------------
+* Feature: trigger sending newsletters asynchronously
+  [tiberich #3948]
+* Feature: send an email announcing start and end of newsletter delivery
+  [tiberich #3948]
+
+2.5.10 - (2010-11-30)
+---------------------
+* Bug fix: don't fail if the subscriber email is invalid when removing subscribers
+  [afd]
+
+2.5.8 - 2010-10-5
+-----------------
+* Fix an error in configure_bouncers.pt template
+  [afd]
+* Fix an error in sending automatic unsubscribe messages
+  [afd]
+
+2.5.2 - 2010-05-06
+------------------
+* No longer write Return-Path header in newsletter emails, our
+  mail servers can't handle it
+
+2.5.1 - 2010-02-12
+------------------
+* non-linear history. Renamed the version to 2.5.1, to indicate
+  the Plone 2.5 affiliation
+* add extensions to remove subscribers based on their status as bouncers.
+  Bouncing status needs to be determined externally and recorded into Zope
+  through a web call. More details are found in the BOUNCING.txt file
+  [afd]
+* changed the package structure into an egg.
+  [afd]
+* PloneGazette 2.5.1 works under Plone 2.5 (r70986)
+  [alecghica]
+
+r71202
+------
+* Added 4 new properties on NewsletterTheme: unsubscribeMailSubject, unsubscribeMailTemplate, confirmMailSubject, confirmMailTemplate
+  Subscriber receive and email after he unsubscribe, so he/she know that is no longer subscribed
+  When a subscriber choose to unsubscribe he/she receive an email containing an url with a unique unsubscribe
+  link (similar to activation procedure) to confirm the unsubscribe, due to the fact that for example anyone can
+  unsubscribe someone if knows his/her email address
+  Similar to 'Subscriber activation mail subject' and 'Subscriber activation mail template', 4 new properties in
+  order to customize 'Confirm unsubscribe mail subject', 'Confirm unsubscribe mail template', 'Unsubscribe mail
+  subject' and 'Unsubscribe mail template'
+  [alecghica]
+* Allow values for 'Newsletter author email' like: Author name <author@author.org> (see validate_newslettertheme_edit.vpy)
+  [alecghica]
+* Use of NewsletterTheme.id instead of NewsletterTheme.absolute_url() used in newsletter template (see NewsletterTheme.py -> def subscribeFormProcess)
+  [alecghica]
+* Disabled default batch view for all subscribers due the fact that for large amount of subscribers the batch view is very very slow. Use the search to
+  find/list your subscribers. (see subscribers_infos.pt)
+  [alecghica]
+* Implemented related items that can be associate to a newsletter (or to generate a newsletter upon an existing object)
+  [alecghica]
+* Added a new tab view on NesletterTheme in order to set a Google Analytics campaign and a new property on Newsletter. At this point you can define for each
+  newsletter you send a Google Analytics campaign.
+  [alecghica]
+
+r71034
+------
+* Fixed the huge amount of time taken to add a subscriber under a context where are already at least 5.000 of
+  other subscriber objects
+  [alecghica]
+
+3.0.0 - 2008-07-11
+------------------
+* fixed test newsletter if testing user were subscribed but not activated
+  [naro]
+* all emails are now encoded. In case of utf8 emails, these will be generated
+  in base64 encoding. Subject is encoded too (if applicable). This may
+  fix situations described in #37 and #40.
+  [naro]
+* Fixed listing of NewsletterRichReference. This fixes #36
+  [Guido A.J. Stevens, naro]
+* added changeRelativeToAbsolute method which converts all relative links
+  generated by Kupu to absolute links.
+  [Ralph Jacobs, 4D]
+* Moved listFolderContents and getFolderContents to PNLBase class. This
+  fixes #34.
+  [naro]
+
+3.0.0-rc2 - 2008-03-22
+----------------------
+* added missing i18n:domain to browser/configure.zcml
+  [hannosch]
+* fixed getUrl -> getURL
+  [naro]
+
+3.0.0-rc1 - 2008-02-17
+----------------------
+* fixed attribute error when accessing NewsletterBTree folder contents (#30)
+* fixed UnicodeError when activation subject or body contains non ascii
+  characters
+* PG is registered to all skins layers
+* another subscribers catalog fix. Catalog is based on CMFCore. catalog tool instead of ZCatalog
+
+3.0.0-beta2 - 2007-12-06
+------------------------
+* fixed initialization of subscribers catalog. Thanks to Wouter Vanden Hove
+
+3.0.0-beta1 - 2007-12-03
+------------------------
+* see UPGRADE.txt for upgrade notes, see README.txt for general installation and usage notes.
+* only major change against 2.5 version is creation of subscribers catalog
+  inside NewsletterTheme objects. All Subscribers are stored in the subscribers_catalog
+  to be easily and fast found and listed.
+* Content types are still CMF based, code is not polished and optimized.
+* removed Extensions/ dir, added basic GS profile with content types and skin layer
+* use secureSend. Emails are generated as email.Message.Message instances and not strings
+* make all forms and object manipulation working in Plone 3
+* cutoff Plone 3.0 compatible version. Dropped Plone 2.1 and 2.5 compatibility.
+  If you want to use PloneGazette on Plone 2.5, use 2.5 branch and versions in
+  PloneGazette 2.5 line.
+
+2.5.0-beta1 - 2007-11-25
+------------------------
+* fixed HTML markup in subscriber edit form to support <label> in radio boxes
+* fixed testSendToMe
+* fixed toLocalizedTime definition (plone 2.5). Thanks to Andrew Kornilov for
+  pointing to it.
+  [naro]
+
+2.5.0-alpha1 - 2007-11-24
+-------------------------
+* replaced toPortalTime with toLocalizedTime in Newsletter view. Fixes #11
+* added getFolderContents method to the NewsletterTheme.
+  This fixes  #4 — Subscribers do not appear in folder listing or view
+* do not use secureSend in combination with email.Message.Message.
+  There is bug in SecureMailHost used in plone 2.5 which prevents this
+  combination (#6504)
+* trying to stay compatible with Plone 2.1 for the moment
+* removed metadata and duplicate Contents tab from newslettertheme and
+  newsletter
+  [naro]
+

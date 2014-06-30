@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+ <rolemap>
+   <permissions>
+     <permission name="PloneGazette: Cleanup Subscribers" acquire="False">
+       <role name="Manager"/>
+       <role name="packrole"/>
+     </permission>
+   </permissions>
+ </rolemap>

@@ -1,0 +1,129 @@
+# Python imports
+import re
+
+# Zope imports
+from App.class_init import InitializeClass
+from AccessControl import ClassSecurityInfo
+from Acquisition import aq_base
+import zLOG
+
+# CMF imports
+from Products.CMFCore.utils import UniqueObject, getToolByName, SimpleRecord
+from Products.CMFCore import permissions
+# Archetypes imports
+from Products.Archetypes.public import *
+from Products.CMFCore.CatalogTool import CatalogTool
+# Products imports
+from Products.PloneGazette.config import PROJECTNAME, PG_CATALOG
+
+class args:
+    def __init__(self, **kw):
+        self.__dict__.update(kw)
+
+class SubscribersCatalog(CatalogTool):
+    """Subscribers catalog for PloneGazette"""
+
+    id = PG_CATALOG
+    title = "Subscribers Catalog"
+    
+    security = ClassSecurityInfo()
+    
+    def __init__(self):
+        CatalogTool.__init__(self)
+
+    security.declarePublic('enumerateIndexes')
+    def enumeratePGIndexes(self):
+        """Returns indexes used by catalog"""
+        pg_lexicon = SimpleRecord( lexicon_id='pg_lexicon',
+                                   index_type='Okapi BM25 Rank',
+			    	 )
+        
+        return (
+                ('id', 'FieldIndex', None),
+                ('email', 'FieldIndex', None),
+                ('SearchableText', 'ZCTextIndex', pg_lexicon),
+                ('fullname', 'ZCTextIndex', pg_lexicon),
+                ('format', 'FieldIndex', None),
+                ('active', 'FieldIndex', None),
+                ('is_bouncing', 'FieldIndex', None)
+                )
+    
+    security.declarePublic('enumerateIndexes')
+    def enumerateIndexes(self):
+        """Returns indexes used by catalog"""
+        return ()
+        
+    def __url(self, object):
+        """Returns url of object"""
+        return '/'.join(object.getPhysicalPath())
+    
+    security.declarePrivate('indexObject')
+    def indexObject(self, object):
+        '''Add to catalog.
+        '''
+        url = self.__url(object)
+        self.catalog_object(object, url)
+
+    security.declarePrivate('unindexObject')
+    def unindexObject(self, object):
+        '''Remove from catalog.
+        '''
+        url = self.__url(object)
+        self.uncatalog_object(url)
+
+    security.declarePrivate('reindexObject')
+    def reindexObject(self, object, idxs=[],  update_metadata=1, uid=None):
+        """Update catalog after object data has changed.
+        The optional idxs argument is a list of specific indexes
+        to update (all of them by default).
+        """
+        
+        url = self.__url(object)
+        if idxs != []:
+            # Filter out invalid indexes.
+            valid_indexes = self._catalog.indexes.keys()
+            idxs = [i for i in idxs if i in valid_indexes]
+        self.catalog_object(object, url, idxs=idxs, update_metadata=update_metadata)
+
+InitializeClass(SubscribersCatalog)
+
+
+def manage_addSubscribersCatalog(self, REQUEST=None):
+    """Add the subscribers catalog
+    """
+
+    c = SubscribersCatalog()
+    self._setObject(c.getId(), c)
+
+    cat = getattr(self, c.getId())
+    
+    # Add Lexicon
+    cat.manage_addProduct['ZCTextIndex'].manage_addLexicon(
+        'pg_lexicon',
+        elements=[
+            args(group='Case Normalizer', name='Case Normalizer'),
+            args(group='Stop Words', name=" Don't remove stop words"),
+            args(group='Word Splitter', name="Unicode Whitespace splitter"),
+        ]
+        )
+
+
+    # Add indexes and metadatas    
+    for index_name, index_type, p_extra in cat.enumeratePGIndexes():
+        try:
+            if index_name not in cat.indexes():
+                if index_type == 'ZCTextIndex':
+                    extra = args(doc_attr=index_name,
+                                 lexicon_id='pg_lexicon',
+                                 index_type='Okapi BM25 Rank')
+                    cat.addIndex(index_name, index_type, extra=extra)
+                else:
+                    cat.addIndex(index_name, index_type)
+                    
+            if not index_name in cat.schema():
+                cat.addColumn(index_name)
+        except:
+            pass
+                    
+    if REQUEST is not None:
+        return self.manage_main(self, REQUEST,update_menu=1)

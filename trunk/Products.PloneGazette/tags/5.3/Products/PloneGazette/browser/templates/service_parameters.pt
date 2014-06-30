@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<filters>
+		<div tal:replace="structure view/filters" />
+	</filters>
+</settings>
