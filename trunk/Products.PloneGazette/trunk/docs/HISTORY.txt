@@ -1,8 +1,8 @@
 Changelog
 =========
 
-5.3-dev - (unreleased)
-----------------------
+5.3 - (2014-06-30)
+------------------
 * Bug fix: fixed the subscription page to treat all subscription scenarios.
   [ghicaale refs #20153]
 * Bug fix: fixed the activate subscribtion page when the requested subscriber
