@@ -19,7 +19,19 @@ from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Products.CMFDefault.SkinnedFolder import SkinnedFolder
 from Products.CMFPlone.PloneFolder import OrderedContainer
 from Products.CMFPlone.utils import safe_unicode
-from elementtree import ElementTree, HTMLTreeBuilder
+try:
+    from elementtree import ElementTree, HTMLTreeBuilder
+except ImportError:
+    #XXX: the code in this module has been tested only with elementtree; 
+    #     using xml.etree may not actually work properly; xml.etree is only
+    #     available in python >= 2.5, while elementtree needs to be installed on 
+    #     python 2.4
+    try:
+        from xml.etree import ElementTree
+        Element = ElementTree.Element
+        HTMLTreeBuilder = ElementTree.TreeBuilder
+    except ImportError:
+        raise Exception("You need to install elementtree or use Python >= 2.5")
 from email.Header import Header
 from urlparse import urlparse
 from zope.i18n import translate
