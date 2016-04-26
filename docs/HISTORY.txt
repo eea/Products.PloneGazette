@@ -1,8 +1,8 @@
 Changelog
 =========
 
-5.4-dev - (unreleased)
-----------------------
+5.4 - (2016-04-26)
+------------------
 * Feature: Upgrade buildout to setuptools >=12.0.5 and zc.buildout>2.1.1
   [chiridra #69357]
 
